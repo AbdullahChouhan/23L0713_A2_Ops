@@ -12,8 +12,16 @@ import requests
 
 def run_cmd(cmd: list[str], cwd: Path = Path(".")) -> str:
     cmd_str = " ".join(cmd)
-    res = subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True, check=False)
-    out = (res.stdout + "\n" + res.stderr).strip()
+    res = subprocess.run(
+        cmd,
+        cwd=str(cwd),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    out = ((res.stdout or "") + "\n" + (res.stderr or "")).strip()
     return f"$ {cmd_str}\n{out if out else '(exit 0)'}\n"
 
 
@@ -122,7 +130,16 @@ def run_task6_3_and_6_5_compose_and_troubleshooting(fig_dir: Path) -> None:
 
     # Wait for both services to become healthy
     for _ in range(18):
-        ps_out = subprocess.run(["docker", "compose", "ps"], capture_output=True, text=True).stdout
+        ps_out = (
+            subprocess.run(
+                ["docker", "compose", "ps"],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+            ).stdout
+            or ""
+        )
         if "healthy" in ps_out.lower() and ps_out.lower().count("healthy") >= 2:
             break
         time.sleep(3)

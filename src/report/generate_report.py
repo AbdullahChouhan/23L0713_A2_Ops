@@ -274,6 +274,13 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
     dvc_proj_txt = fig_dir / "task1_4_project_dvc_log.txt"
     if dvc_proj_txt.exists():
         pdf.code_block("Terminal Evidence (Task 1.4b): Project data/raw.dvc Pointer & Remote Setup", dvc_proj_txt.read_text(encoding="utf-8"), max_lines=22)
+    git_push_img = fig_dir / "user_git_push_screenshot.png"
+    if git_push_img.exists():
+        pdf.add_figure(
+            git_push_img,
+            "Figure 1.4: Terminal screenshot of initial commit push to https://github.com/AbdullahChouhan/23L0713_A2_Ops.git.",
+            width=165.0,
+        )
 
     # CHAPTER 2: TASK 2
     pdf.add_page()
@@ -486,21 +493,26 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
 
     pdf.subtask_heading("Task 6.2 & 6.4: Production Dockerfile, Non-Root Execution & Image Size Optimization")
     pdf.body_paragraph(
-        "Instruction Ordering, CPU-Only TensorFlow & Size Optimization",
-        "In Dockerfile, we copy requirements-prod.txt and run pip install --no-cache-dir BEFORE copying app/ source code so code edits reuse the cached dependency layer. We chose python:3.11-slim and tensorflow-cpu==2.18.0 instead of full GPU TensorFlow because cloud inference runs on CPU instances, saving over 1.2 GB of unused NVIDIA CUDA/cuDNN shared libraries. Combined with .dockerignore (excluding data/raw and .venv), our image runs as non-root user appuser (uid 999) with a built-in container HEALTHCHECK.",
+        "Instruction Ordering, CPU-Only TensorFlow & Size Optimization (4.24 GB -> 2.13 GB)",
+        "In Dockerfile, we copy requirements-prod.txt and run pip install --no-cache-dir BEFORE copying app/ source code so code edits reuse the cached dependency layer. We chose python:3.11-slim and tensorflow-cpu==2.18.0 instead of the full python:3.11 base and cached wheels. As shown in docker images and docker history below, the unoptimized image (23l0713_a2_ops_web:unoptimized) was 4.24 GB (with a 1.88 GB pip layer and 696 MB + 202 MB Debian toolchain layers), whereas our optimized image (23l0713_a2_ops_web:latest) is 2.13 GB (largest layers: 1.52 GB pip install --no-cache-dir, 87.7 MB slim base, 22.5 MB champion_model.keras) — saving 2.11 GB (a 49.8% size reduction). Inside the container, whoami/id confirms execution as non-root uid=999(appuser) gid=999(appgroup).",
     )
     img_txt = fig_dir / "task6_2_6_4_image_analysis.txt"
     if img_txt.exists():
-        pdf.code_block("Terminal Evidence (Task 6.2 & 6.4): Non-Root User Verification & Before/After Image Size Analysis", img_txt.read_text(encoding="utf-8"), max_lines=30)
+        img_lines = img_txt.read_text(encoding="utf-8").splitlines()
+        # Extract the non-root check and the final docker images + docker history tables
+        tail_excerpt = "\n".join(img_lines[430:481])
+        pdf.code_block("Terminal Evidence (Task 6.2 & 6.4): Image Size Comparison (4.24GB vs 2.13GB) & Layer History", tail_excerpt, max_lines=45)
 
     pdf.subtask_heading("Task 6.3 & 6.5: Docker Compose Stack, Network Isolation & Failure Diagnosis")
     pdf.body_paragraph(
         "Compose Architecture & Intentional Failure Troubleshooting",
-        "docker-compose.yml defines two services on internal bridge network 23l0713_a2_ops_net: db (postgres:16-alpine with named volume 23l0713_a2_ops_pgdata and pg_isready healthcheck) and web (depending on db with condition: service_healthy). The db service publishes NO host ports, making PostgreSQL unreachable from outside while reachable by service name 'db:5432' from web. For Task 6.5, we simulated a credential mismatch by setting an invalid POSTGRES_PASSWORD for the web container; diagnosed the OperationalError: password authentication failed for user 'visionguard_user' strictly from docker compose logs; and restored .env to recover healthy status.",
+        "docker-compose.yml defines two services on internal bridge network 23l0713_a2_ops_net: db (postgres:16-alpine with named volume 23l0713_a2_ops_pgdata and pg_isready healthcheck) and web (depending on db with condition: service_healthy). The db service publishes NO host ports (docker compose port db 5432 returns :0 and host TCP socket check to 127.0.0.1:5432 returns False), making PostgreSQL unreachable from outside while reachable by service name 'db:5432' from web. For Task 6.5, we executed interactive shells in both services, demonstrated restart/stop/start, and simulated a credential mismatch by setting an invalid POSTGRES_PASSWORD; diagnosed the FATAL: password authentication failed for user 'visionguard_user' error strictly from docker compose logs; and restored .env to recover HTTP 200 healthy status.",
     )
     comp_txt = fig_dir / "task6_3_6_5_compose_and_troubleshooting.txt"
     if comp_txt.exists():
-        pdf.code_block("Terminal Evidence (Task 6.3 & 6.5): Compose Health, Closed DB Port Proof & Failure Diagnosis", comp_txt.read_text(encoding="utf-8"), max_lines=34)
+        c_lines = comp_txt.read_text(encoding="utf-8").splitlines()
+        compose_excerpt = "\n".join(c_lines[311:338] + [""] + c_lines[430:546])
+        pdf.code_block("Terminal Evidence (Task 6.3 & 6.5): Compose Health, Closed DB Port Proof, Shells & Failure Logs", compose_excerpt, max_lines=52)
 
     pdf.subtask_heading("Task 6.6: GitHub Actions Continuous Integration (CI)")
     pdf.body_paragraph(

@@ -3,49 +3,544 @@ Task 6.3 & 6.5 — Docker Compose Stack, Network Isolation & Troubleshooting Log
 Project: 23L0713_A2_Ops | Student: Abdullah Chouhan (23L0713)
 ==============================================================================
 $ docker compose up -d --build
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+#1 [internal] load local bake definitions
+#1 reading from stdin 508B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.47kB done
+#2 DONE 0.0s
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/python:3.11-slim
+#4 DONE 1.5s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 345B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 965B done
+#6 DONE 0.0s
+
+#7 [1/7] FROM docker.io/library/python:3.11-slim@sha256:db20d8506e2f15b6db39b40b6015ca46bae855dec6dd326d462cfe79ae972893
+#7 resolve docker.io/library/python:3.11-slim@sha256:db20d8506e2f15b6db39b40b6015ca46bae855dec6dd326d462cfe79ae972893 0.0s done
+#7 DONE 0.0s
+
+#8 [2/7] WORKDIR /app
+#8 CACHED
+
+#9 [5/7] RUN pip install --no-cache-dir -r requirements-prod.txt
+#9 CACHED
+
+#10 [6/7] COPY --chown=appuser:appgroup app/ ./app/
+#10 CACHED
+
+#11 [4/7] COPY requirements-prod.txt ./
+#11 CACHED
+
+#12 [3/7] RUN groupadd --system appgroup &&     useradd --system --gid appgroup --create-home --home-dir /home/appuser appuser
+#12 CACHED
+
+#13 [7/7] COPY --chown=appuser:appgroup models/champion_model.keras ./models/champion_model.keras
+#13 CACHED
+
+#14 exporting to image
+#14 exporting layers done
+#14 exporting manifest sha256:615a4f54e26d450f006c02a14118076c2d2758c230a6d60d59bf0cbb97facb8f done
+#14 exporting config sha256:7391ada49bb6727066783bb678af5e84ad42635cadcc005665a4a4036efe76f4 done
+#14 exporting attestation manifest sha256:d643105e30add420170941cb581dc14fcaade001204140a5a6abccbaf1ad62d3 0.0s done
+#14 exporting manifest list sha256:028bfbd60fa41873a00e6a37b66bae9fae773a431114ab219d7e81d5ad1dfad1 0.0s done
+#14 naming to docker.io/library/23l0713_a2_ops_web:latest done
+#14 unpacking to docker.io/library/23l0713_a2_ops_web:latest done
+#14 DONE 0.1s
+
+#15 resolving provenance for metadata file
+#15 DONE 0.0s
+
+ Image postgres:16-alpine Pulling 
+ 9f477227db48 Pulling fs layer 0B
+ 7b229517ed22 Pulling fs layer 0B
+ 768bbab50810 Pulling fs layer 0B
+ 911527e7800c Pulling fs layer 0B
+ d982e6c592c4 Pulling fs layer 0B
+ 22df74fd5323 Pulling fs layer 0B
+ d3f6cab92edc Pulling fs layer 0B
+ a735dce41235 Pulling fs layer 0B
+ 42065dcfea93 Pulling fs layer 0B
+ f121f7f3dec1 Pulling fs layer 0B
+ 7ea8819886f9 Pulling fs layer 0B
+ 9f477227db48 Download complete 0B
+ d3f6cab92edc Download complete 0B
+ 911527e7800c Downloading 169B
+ 768bbab50810 Download complete 0B
+ 911527e7800c Download complete 0B
+ 22df74fd5323 Download complete 0B
+ 7b229517ed22 Downloading 1.049MB
+ 7b229517ed22 Downloading 1.049MB
+ d982e6c592c4 Download complete 0B
+ 42065dcfea93 Download complete 0B
+ 7b229517ed22 Downloading 2.097MB
+ 7b229517ed22 Downloading 3.146MB
+ 7ea8819886f9 Download complete 0B
+ 7b229517ed22 Download complete 0B
+ 7b229517ed22 Extracting 1B
+ f121f7f3dec1 Downloading 1.049MB
+ 7b229517ed22 Extracting 1B
+ f121f7f3dec1 Downloading 2.097MB
+ 7b229517ed22 Extracting 1B
+ f121f7f3dec1 Downloading 3.146MB
+ 7b229517ed22 Extracting 1B
+ a735dce41235 Download complete 0B
+ f121f7f3dec1 Downloading 4.194MB
+ 768bbab50810 Pull complete 0B
+ d982e6c592c4 Extracting 1B
+ 7b229517ed22 Pull complete 0B
+ f121f7f3dec1 Downloading 5.243MB
+ d982e6c592c4 Pull complete 0B
+ 42065dcfea93 Pull complete 0B
+ a735dce41235 Pull complete 0B
+ f121f7f3dec1 Downloading 7.34MB
+ f121f7f3dec1 Downloading 7.34MB
+ f121f7f3dec1 Downloading 9.437MB
+ f121f7f3dec1 Downloading 9.437MB
+ f121f7f3dec1 Downloading 10.49MB
+ b3e0ec4a3ace Downloading 44.31kB
+ f121f7f3dec1 Downloading 12.58MB
+ b3e0ec4a3ace Download complete 0B
+ 9f4aa3a44541 Download complete 0B
+ f121f7f3dec1 Downloading 13.63MB
+ f121f7f3dec1 Downloading 13.63MB
+ f121f7f3dec1 Downloading 14.68MB
+ f121f7f3dec1 Downloading 14.68MB
+ f121f7f3dec1 Downloading 15.73MB
+ f121f7f3dec1 Downloading 15.73MB
+ f121f7f3dec1 Downloading 16.78MB
+ f121f7f3dec1 Downloading 16.78MB
+ f121f7f3dec1 Downloading 17.83MB
+ f121f7f3dec1 Downloading 18.87MB
+ f121f7f3dec1 Downloading 18.87MB
+ f121f7f3dec1 Downloading 19.92MB
+ f121f7f3dec1 Downloading 19.92MB
+ f121f7f3dec1 Downloading 20.97MB
+ f121f7f3dec1 Downloading 20.97MB
+ f121f7f3dec1 Downloading 22.02MB
+ f121f7f3dec1 Downloading 22.02MB
+ f121f7f3dec1 Downloading 23.07MB
+ f121f7f3dec1 Downloading 23.07MB
+ f121f7f3dec1 Downloading 24.12MB
+ f121f7f3dec1 Downloading 25.17MB
+ f121f7f3dec1 Downloading 25.17MB
+ f121f7f3dec1 Downloading 26.21MB
+ f121f7f3dec1 Downloading 26.21MB
+ f121f7f3dec1 Downloading 27.26MB
+ f121f7f3dec1 Downloading 27.26MB
+ f121f7f3dec1 Downloading 28.31MB
+ f121f7f3dec1 Downloading 28.31MB
+ f121f7f3dec1 Downloading 29.36MB
+ f121f7f3dec1 Downloading 29.36MB
+ f121f7f3dec1 Downloading 30.41MB
+ f121f7f3dec1 Downloading 31.46MB
+ f121f7f3dec1 Downloading 31.46MB
+ f121f7f3dec1 Downloading 32.51MB
+ f121f7f3dec1 Downloading 33.55MB
+ f121f7f3dec1 Downloading 34.6MB
+ f121f7f3dec1 Downloading 34.6MB
+ f121f7f3dec1 Downloading 35.65MB
+ f121f7f3dec1 Downloading 36.7MB
+ f121f7f3dec1 Downloading 38.8MB
+ f121f7f3dec1 Downloading 38.8MB
+ f121f7f3dec1 Downloading 39.85MB
+ f121f7f3dec1 Downloading 39.85MB
+ f121f7f3dec1 Downloading 39.85MB
+ f121f7f3dec1 Downloading 40.89MB
+ f121f7f3dec1 Downloading 41.94MB
+ f121f7f3dec1 Downloading 42.99MB
+ f121f7f3dec1 Downloading 42.99MB
+ f121f7f3dec1 Downloading 44.04MB
+ f121f7f3dec1 Downloading 44.04MB
+ f121f7f3dec1 Downloading 45.09MB
+ f121f7f3dec1 Downloading 45.09MB
+ f121f7f3dec1 Downloading 46.14MB
+ f121f7f3dec1 Downloading 47.19MB
+ f121f7f3dec1 Downloading 47.19MB
+ f121f7f3dec1 Downloading 48.23MB
+ f121f7f3dec1 Downloading 48.23MB
+ f121f7f3dec1 Downloading 49.28MB
+ f121f7f3dec1 Downloading 49.28MB
+ f121f7f3dec1 Downloading 50.33MB
+ f121f7f3dec1 Downloading 50.33MB
+ f121f7f3dec1 Downloading 51.38MB
+ f121f7f3dec1 Downloading 51.38MB
+ f121f7f3dec1 Downloading 52.43MB
+ f121f7f3dec1 Downloading 53.48MB
+ f121f7f3dec1 Downloading 53.48MB
+ f121f7f3dec1 Downloading 54.53MB
+ f121f7f3dec1 Downloading 55.57MB
+ f121f7f3dec1 Downloading 55.57MB
+ f121f7f3dec1 Downloading 56.62MB
+ f121f7f3dec1 Downloading 57.67MB
+ f121f7f3dec1 Downloading 58.72MB
+ f121f7f3dec1 Downloading 59.77MB
+ f121f7f3dec1 Downloading 59.77MB
+ f121f7f3dec1 Downloading 59.77MB
+ f121f7f3dec1 Downloading 60.82MB
+ f121f7f3dec1 Downloading 60.82MB
+ f121f7f3dec1 Downloading 61.87MB
+ f121f7f3dec1 Downloading 62.91MB
+ f121f7f3dec1 Downloading 63.96MB
+ f121f7f3dec1 Downloading 63.96MB
+ f121f7f3dec1 Downloading 65.01MB
+ f121f7f3dec1 Downloading 65.01MB
+ f121f7f3dec1 Downloading 66.06MB
+ f121f7f3dec1 Downloading 67.11MB
+ f121f7f3dec1 Downloading 67.11MB
+ f121f7f3dec1 Downloading 68.16MB
+ f121f7f3dec1 Downloading 68.16MB
+ f121f7f3dec1 Downloading 69.21MB
+ f121f7f3dec1 Downloading 70.25MB
+ f121f7f3dec1 Downloading 70.25MB
+ f121f7f3dec1 Downloading 71.3MB
+ f121f7f3dec1 Downloading 71.3MB
+ f121f7f3dec1 Downloading 72.35MB
+ f121f7f3dec1 Downloading 73.4MB
+ f121f7f3dec1 Downloading 73.4MB
+ f121f7f3dec1 Downloading 74.45MB
+ f121f7f3dec1 Downloading 74.45MB
+ f121f7f3dec1 Downloading 75.5MB
+ f121f7f3dec1 Downloading 76.55MB
+ f121f7f3dec1 Downloading 76.55MB
+ f121f7f3dec1 Downloading 77.59MB
+ f121f7f3dec1 Downloading 78.64MB
+ f121f7f3dec1 Downloading 79.69MB
+ f121f7f3dec1 Downloading 80.74MB
+ f121f7f3dec1 Downloading 80.74MB
+ f121f7f3dec1 Downloading 80.74MB
+ f121f7f3dec1 Downloading 81.79MB
+ f121f7f3dec1 Downloading 82.84MB
+ f121f7f3dec1 Downloading 83.89MB
+ f121f7f3dec1 Downloading 83.89MB
+ f121f7f3dec1 Downloading 84.93MB
+ f121f7f3dec1 Downloading 84.93MB
+ f121f7f3dec1 Downloading 85.98MB
+ f121f7f3dec1 Downloading 87.03MB
+ f121f7f3dec1 Downloading 87.03MB
+ f121f7f3dec1 Downloading 88.08MB
+ f121f7f3dec1 Downloading 89.13MB
+ f121f7f3dec1 Downloading 89.13MB
+ f121f7f3dec1 Downloading 90.18MB
+ f121f7f3dec1 Downloading 90.18MB
+ f121f7f3dec1 Downloading 91.23MB
+ f121f7f3dec1 Downloading 92.27MB
+ f121f7f3dec1 Downloading 92.27MB
+ f121f7f3dec1 Downloading 93.32MB
+ f121f7f3dec1 Downloading 94.37MB
+ f121f7f3dec1 Downloading 94.37MB
+ f121f7f3dec1 Downloading 95.42MB
+ f121f7f3dec1 Downloading 95.42MB
+ f121f7f3dec1 Downloading 96.47MB
+ f121f7f3dec1 Downloading 96.47MB
+ f121f7f3dec1 Downloading 96.47MB
+ f121f7f3dec1 Downloading 96.47MB
+ f121f7f3dec1 Downloading 97.52MB
+ f121f7f3dec1 Downloading 98.57MB
+ f121f7f3dec1 Downloading 98.57MB
+ f121f7f3dec1 Downloading 99.61MB
+ f121f7f3dec1 Downloading 100.7MB
+ f121f7f3dec1 Downloading 101.7MB
+ f121f7f3dec1 Downloading 102.8MB
+ f121f7f3dec1 Downloading 103.8MB
+ f121f7f3dec1 Downloading 104.9MB
+ f121f7f3dec1 Downloading 104.9MB
+ f121f7f3dec1 Downloading 104.9MB
+ f121f7f3dec1 Downloading 105.9MB
+ f121f7f3dec1 Downloading 107MB
+ f121f7f3dec1 Downloading 108MB
+ f121f7f3dec1 Downloading 108MB
+ f121f7f3dec1 Downloading 109.1MB
+ f121f7f3dec1 Downloading 109.1MB
+ f121f7f3dec1 Downloading 110.1MB
+ f121f7f3dec1 Downloading 111.1MB
+ f121f7f3dec1 Download complete 0B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 1B
+ f121f7f3dec1 Extracting 2B
+ f121f7f3dec1 Extracting 2B
+ f121f7f3dec1 Extracting 2B
+ f121f7f3dec1 Extracting 2B
+ f121f7f3dec1 Extracting 2B
+ f121f7f3dec1 Extracting 2B
+ 9f477227db48 Extracting 1B
+ d3f6cab92edc Pull complete 0B
+ 911527e7800c Pull complete 0B
+ 22df74fd5323 Pull complete 0B
+ 7ea8819886f9 Pull complete 0B
+ f121f7f3dec1 Pull complete 0B
+ 9f477227db48 Pull complete 0B
+ Image postgres:16-alpine Pulled 
+ Image 23l0713_a2_ops_web:latest Building 
+ Image 23l0713_a2_ops_web:latest Built 
+ Volume 23l0713_a2_ops_pgdata Creating 
+ Network 23l0713_a2_ops_net Creating 
+ Volume 23l0713_a2_ops_pgdata Creating 
+ Network 23l0713_a2_ops_net Creating 
+ Volume 23l0713_a2_ops_pgdata Created 
+ Volume 23l0713_a2_ops_pgdata Created 
+ Network 23l0713_a2_ops_net Created 
+ Network 23l0713_a2_ops_net Created 
+ Container 23l0713_a2_ops_db Creating 
+ Container 23l0713_a2_ops_db Created 
+ Container 23l0713_a2_ops_web Creating 
+ Container 23l0713_a2_ops_web Created 
+ Container 23l0713_a2_ops_db Starting 
+ Container 23l0713_a2_ops_db Started 
+ Container 23l0713_a2_ops_db Waiting 
+ Container 23l0713_a2_ops_db Healthy 
+ Container 23l0713_a2_ops_web Starting 
+ Container 23l0713_a2_ops_web Started
 
 $ docker compose ps
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+NAME                 IMAGE                       COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+23l0713_a2_ops_db    postgres:16-alpine          "docker-entrypoint.s…"   db        12 seconds ago   Up 11 seconds (healthy)   5432/tcp
+23l0713_a2_ops_web   23l0713_a2_ops_web:latest   "gunicorn --bind 0.0…"   web       12 seconds ago   Up 6 seconds (healthy)    0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp
 
 $ docker compose port db 5432
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+:0
 
 $ python socket check 127.0.0.1:5432 from host -> Port 5432 reachable from outside? False (Expected: False)
 
-Compose HTTP verification note: HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+$ GET http://127.0.0.1:5000/health (HTTP 200)
+{
+  "cloud_api_url": null,
+  "database_status": "connected",
+  "debug_mode": false,
+  "decision_threshold": 0.5,
+  "model_error": null,
+  "model_loaded": true,
+  "model_path": "/app/models/champion_model.keras",
+  "model_version": "VisionGuard-MobileNetV2-v2@champion",
+  "project": "23L0713_A2_Ops",
+  "status": "healthy",
+  "student": "Abdullah Chouhan (23L0713)",
+  "timestamp": "2026-11-04T22:55:05+00:00",
+  "use_cloud_api": false
+}
+
+$ POST http://127.0.0.1:5000/api/predict (ct-art-vector-illustrations-creative-minimalist-hand-drawn-vector-2286463217.jpg) -> HTTP 200
+{
+  "caveat": "Honest Caveat: VisionGuard evaluates visual texture, lighting consistency, and frequency patterns at 160x160 resolution. Highly stylized digital illustrations, heavy JPEG compression, or post-processed studio photographs can occasionally trigger false positives or false negatives.",
+  "confidence": 0.5654,
+  "confidence_pct": 56.54,
+  "file_size_kb": 100.99,
+  "filename": "ct-art-vector-illustrations-creative-minimalist-hand-drawn-vector-2286463217.jpg",
+  "image_meta": {
+    "color_mode": "RGB",
+    "dimensions_str": "1500x933 (JPEG/RGB)",
+    "format": "JPEG",
+    "height": 933,
+    "width": 1500
+  },
+  "is_ai": true,
+  "latency_ms": 97.46,
+  "log_id": 1,
+  "logged_at": "2026-11-04 22:55:05 UTC",
+  "model_version": "VisionGuard-MobileNetV2-v2@champion",
+  "prob_ai": 0.5654,
+  "project": "23L0713_A2_Ops",
+  "student": "Abdullah Chouhan (23L0713)",
+  "threshold": 0.5,
+  "verdict": "AI-Generated"
+}
+
+$ POST http://127.0.0.1:5000/api/predict (daniel-norton-portrait-photography-CLOSE.jpg) -> HTTP 200
+{
+  "caveat": "Honest Caveat: VisionGuard evaluates visual texture, lighting consistency, and frequency patterns at 160x160 resolution. Highly stylized digital illustrations, heavy JPEG compression, or post-processed studio photographs can occasionally trigger false positives or false negatives.",
+  "confidence": 0.8022,
+  "confidence_pct": 80.22,
+  "file_size_kb": 76.25,
+  "filename": "daniel-norton-portrait-photography-CLOSE.jpg",
+  "image_meta": {
+    "color_mode": "RGB",
+    "dimensions_str": "1000x667 (JPEG/RGB)",
+    "format": "JPEG",
+    "height": 667,
+    "width": 1000
+  },
+  "is_ai": false,
+  "latency_ms": 71.13,
+  "log_id": 2,
+  "logged_at": "2026-11-04 22:55:05 UTC",
+  "model_version": "VisionGuard-MobileNetV2-v2@champion",
+  "prob_ai": 0.1978,
+  "project": "23L0713_A2_Ops",
+  "student": "Abdullah Chouhan (23L0713)",
+  "threshold": 0.5,
+  "verdict": "Real"
+}
+
+$ GET http://127.0.0.1:5000/history?format=json -> HTTP 200
+{
+  "count": 2,
+  "history": [
+    {
+      "confidence": 0.8022,
+      "confidence_pct": 80.22,
+      "created_at": "2026-11-04 22:55:05 UTC",
+      "file_size_kb": 76.25,
+      "filename": "daniel-norton-portrait-photography-CLOSE.jpg",
+      "id": 2,
+      "image_dimensions": "1000x667 (JPEG/RGB)",
+      "inference_source": "api_endpoint",
+      "latency_ms": 71.13,
+      "model_version": "VisionGuard-MobileNetV2-v2@champion",
+      "prob_ai": 0.1978,
+      "threshold": 0.5,
+      "verdict": "Real"
+    },
+    {
+      "confidence": 0.5654,
+      "confidence_pct": 56.54,
+      "created_at": "2026-11-04 22:55:05 UTC",
+      "file_size_kb": 100.99,
+      "filename": "ct-art-vector-illustrations-creative-minimalist-hand-drawn-vector-2286463217.jpg",
+      "id": 1,
+      "image_dimensions": "1500x933 (JPEG/RGB)",
+      "inference_source": "api_endpoint",
+      "latency_ms": 97.46,
+      "model_version": "VisionGuard-MobileNetV2-v2@champion",
+      "prob_ai": 0.5654,
+      "threshold": 0.5,
+      "verdict": "AI-Generated"
+    }
+  ],
+  "project": "23L0713_A2_Ops"
+}
 
 
 --- [Task 6.5] Shell inside web and db containers + start/stop/restart ---
 $ docker compose exec -T web sh -c whoami && id && ls -lh /app/models
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+appuser
+uid=999(appuser) gid=999(appgroup) groups=999(appgroup)
+total 23M
+-rwxrwxrwx 1 root root 1.3M Nov  4 22:05 baseline_cnn.keras
+-rwxrwxrwx 1 root root  22M Nov  4 22:06 champion_model.keras
 
 $ docker compose exec -T db psql -U visionguard_user -d visionguard_db -c SELECT id, filename, verdict, confidence, model_version, created_at FROM prediction_logs;
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+id |                                     filename                                     |   verdict    | confidence |            model_version            |         created_at         
+----+----------------------------------------------------------------------------------+--------------+------------+-------------------------------------+----------------------------
+  1 | ct-art-vector-illustrations-creative-minimalist-hand-drawn-vector-2286463217.jpg | AI-Generated |     0.5654 | VisionGuard-MobileNetV2-v2@champion | 2026-11-04 22:55:05.548107
+  2 | daniel-norton-portrait-photography-CLOSE.jpg                                     | Real         |     0.8022 | VisionGuard-MobileNetV2-v2@champion | 2026-11-04 22:55:05.640237
+(2 rows)
 
 $ docker compose restart web
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+Container 23l0713_a2_ops_web Restarting 
+ Container 23l0713_a2_ops_web Started
 
 $ docker compose stop web
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+Container 23l0713_a2_ops_web Stopping 
+ Container 23l0713_a2_ops_web Stopped
 
 $ docker compose start web
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+Container 23l0713_a2_ops_db Waiting 
+ Container 23l0713_a2_ops_db Healthy 
+ Container 23l0713_a2_ops_web Starting 
+ Container 23l0713_a2_ops_web Started
 
 
 --- [Task 6.5] Intentional Failure Simulation: Broken Database Password ---
 $ docker compose up -d web
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+Container 23l0713_a2_ops_db Recreate 
+ Container 23l0713_a2_ops_db Recreated 
+ Container 23l0713_a2_ops_web Recreate 
+ Container 23l0713_a2_ops_web Recreated 
+ Container 23l0713_a2_ops_db Starting 
+ Container 23l0713_a2_ops_db Started 
+ Container 23l0713_a2_ops_db Waiting 
+ Container 23l0713_a2_ops_db Healthy 
+ Container 23l0713_a2_ops_web Starting 
+ Container 23l0713_a2_ops_web Started
 
-Health check during failure: HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+$ GET http://127.0.0.1:5000/health during failure -> HTTP 503
+{
+  "cloud_api_url": null,
+  "database_status": "OperationalError: (psycopg2.OperationalError) connection to server at \"db\" (172.18.0.2), port 5432 failed: FATAL:  password authentication failed for user \"visionguard_user\"\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+  "debug_mode": false,
+  "decision_threshold": 0.5,
+  "model_error": null,
+  "model_loaded": true,
+  "model_path": "/app/models/champion_model.keras",
+  "model_version": "VisionGuard-MobileNetV2-v2@champion",
+  "project": "23L0713_A2_Ops",
+  "status": "unhealthy",
+  "student": "Abdullah Chouhan (23L0713)",
+  "timestamp": "2026-11-04T22:55:28+00:00",
+  "use_cloud_api": false
+}
 
 $ docker compose logs --tail 25 web
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+23l0713_a2_ops_web  | [2026-11-04 22:55:24 +0000] [1] [INFO] Starting gunicorn 23.0.0
+23l0713_a2_ops_web  | [2026-11-04 22:55:24 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+23l0713_a2_ops_web  | [2026-11-04 22:55:24 +0000] [1] [INFO] Using worker: gthread
+23l0713_a2_ops_web  | [2026-11-04 22:55:24 +0000] [7] [INFO] Booting worker with pid: 7
+23l0713_a2_ops_web  | 2026-11-04 22:55:25.293599: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+23l0713_a2_ops_web  | 2026-11-04 22:55:25.323002: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+23l0713_a2_ops_web  | To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+23l0713_a2_ops_web  | [2026-11-04 22:55:26,597] ERROR in main: Database initialization failed: (psycopg2.OperationalError) connection to server at "db" (172.18.0.2), port 5432 failed: FATAL:  password authentication failed for user "visionguard_user"
+23l0713_a2_ops_web  | 
+23l0713_a2_ops_web  | (Background on this error at: https://sqlalche.me/e/20/e3q8)
 
 $ docker compose logs --tail 15 db
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+23l0713_a2_ops_db  | 
+23l0713_a2_ops_db  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+23l0713_a2_ops_db  | 
+23l0713_a2_ops_db  | 2026-11-04 22:55:19.100 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+23l0713_a2_ops_db  | 2026-11-04 22:55:19.100 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+23l0713_a2_ops_db  | 2026-11-04 22:55:19.100 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+23l0713_a2_ops_db  | 2026-11-04 22:55:19.103 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+23l0713_a2_ops_db  | 2026-11-04 22:55:19.107 UTC [29] LOG:  database system was shut down at 2026-11-04 22:55:12 UTC
+23l0713_a2_ops_db  | 2026-11-04 22:55:19.112 UTC [1] LOG:  database system is ready to accept connections
+23l0713_a2_ops_db  | 2026-11-04 22:55:26.596 UTC [40] FATAL:  password authentication failed for user "visionguard_user"
+23l0713_a2_ops_db  | 2026-11-04 22:55:26.596 UTC [40] DETAIL:  Connection matched file "/var/lib/postgresql/data/pg_hba.conf" line 128: "host all all all scram-sha-256"
+23l0713_a2_ops_db  | 2026-11-04 22:55:28.342 UTC [41] FATAL:  password authentication failed for user "visionguard_user"
+23l0713_a2_ops_db  | 2026-11-04 22:55:28.342 UTC [41] DETAIL:  Connection matched file "/var/lib/postgresql/data/pg_hba.conf" line 128: "host all all all scram-sha-256"
 
 
 --- [Task 6.5] Fix Applied: Restored POSTGRES_PASSWORD in .env and recreated web service ---
 $ docker compose up -d web
-failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+Container 23l0713_a2_ops_db Recreate 
+ Container 23l0713_a2_ops_db Recreated 
+ Container 23l0713_a2_ops_web Recreate 
+ Container 23l0713_a2_ops_web Recreated 
+ Container 23l0713_a2_ops_db Starting 
+ Container 23l0713_a2_ops_db Started 
+ Container 23l0713_a2_ops_db Waiting 
+ Container 23l0713_a2_ops_db Healthy 
+ Container 23l0713_a2_ops_web Starting 
+ Container 23l0713_a2_ops_web Started
+
+$ GET http://127.0.0.1:5000/health after recovery -> HTTP 200
+{
+  "cloud_api_url": null,
+  "database_status": "connected",
+  "debug_mode": false,
+  "decision_threshold": 0.5,
+  "model_error": null,
+  "model_loaded": true,
+  "model_path": "/app/models/champion_model.keras",
+  "model_version": "VisionGuard-MobileNetV2-v2@champion",
+  "project": "23L0713_A2_Ops",
+  "status": "healthy",
+  "student": "Abdullah Chouhan (23L0713)",
+  "timestamp": "2026-11-04T22:55:39+00:00",
+  "use_cloud_api": false
+}
