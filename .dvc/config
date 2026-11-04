@@ -1,0 +1,7 @@
+[core]
+    remote = origin
+['remote "origin"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops.s3
+['remote "localstore"']
+    url = D:\Projects\FAST\MLOPs\A2\toy_labs\project_dvc_remote

@@ -1,0 +1,51 @@
+==============================================================================
+Task 6.3 & 6.5 — Docker Compose Stack, Network Isolation & Troubleshooting Log
+Project: 23L0713_A2_Ops | Student: Abdullah Chouhan (23L0713)
+==============================================================================
+$ docker compose up -d --build
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker compose ps
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker compose port db 5432
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ python socket check 127.0.0.1:5432 from host -> Port 5432 reachable from outside? False (Expected: False)
+
+Compose HTTP verification note: HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+
+
+--- [Task 6.5] Shell inside web and db containers + start/stop/restart ---
+$ docker compose exec -T web sh -c whoami && id && ls -lh /app/models
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker compose exec -T db psql -U visionguard_user -d visionguard_db -c SELECT id, filename, verdict, confidence, model_version, created_at FROM prediction_logs;
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker compose restart web
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker compose stop web
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker compose start web
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+
+--- [Task 6.5] Intentional Failure Simulation: Broken Database Password ---
+$ docker compose up -d web
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+Health check during failure: HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+
+$ docker compose logs --tail 25 web
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker compose logs --tail 15 db
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+
+--- [Task 6.5] Fix Applied: Restored POSTGRES_PASSWORD in .env and recreated web service ---
+$ docker compose up -d web
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.

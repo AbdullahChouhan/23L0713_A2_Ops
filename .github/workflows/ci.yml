@@ -1,0 +1,45 @@
+name: VisionGuard CI (23L0713_A2_Ops)
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  lint-test-and-build:
+    name: Lint, Test & Build Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: requirements-prod.txt
+
+      - name: Install dependencies & test tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-prod.txt pytest ruff
+
+      - name: Run Ruff Linter
+        run: |
+          ruff check app/ tests/ --select E,F,W --ignore E501
+
+      - name: Run Pytest Unit & Validation Suite
+        env:
+          DATABASE_URL: sqlite:///test_ci_visionguard.db
+          MODEL_PATH: models/champion_model.keras
+          FLASK_DEBUG: "0"
+        run: |
+          python -m pytest tests/ -v
+
+      - name: Build VisionGuard Docker Image
+        run: |
+          docker build -t 23l0713_a2_ops_web:ci .
+          docker images 23l0713_a2_ops_web:ci

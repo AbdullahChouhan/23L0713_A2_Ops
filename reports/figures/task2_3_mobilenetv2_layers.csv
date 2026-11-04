@@ -1,0 +1,10 @@
+Layer Name,Layer Type,Output Shape,Total Params,Trainable Params,Non-Trainable Params
+input_rgb,InputLayer,"(None, 160, 160, 3)",0,0,0
+mobilenetv2_preprocess,Rescaling,"(None, 160, 160, 3)",0,0,0
+mobilenetv2_1.00_160,Functional,"(None, 5, 5, 1280)",2257984,1348480,909504
+gap,GlobalAveragePooling2D,"(None, 1280)",0,0,0
+head_bn,BatchNormalization,"(None, 1280)",5120,2560,2560
+head_drop1,Dropout,"(None, 1280)",0,0,0
+head_dense,Dense,"(None, 128)",163968,163968,0
+head_drop2,Dropout,"(None, 128)",0,0,0
+prob_ai,Dense,"(None, 1)",129,129,0

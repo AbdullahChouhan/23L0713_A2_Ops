@@ -1,0 +1,18 @@
+{
+  "best_trial": {
+    "Rank": 1,
+    "Trial ID": "4",
+    "Learning Rate": 0.001,
+    "Dropout Rate": 0.35,
+    "Unfrozen Layers": 0,
+    "Best Val AUC": 0.8458,
+    "Best Val Accuracy": 0.7123,
+    "Best Val Loss": 0.5862
+  },
+  "effect_range_on_val_auc": {
+    "Learning Rate": 0.0451,
+    "Dropout Rate": 0.0473,
+    "Unfrozen Layers": 0.0683
+  },
+  "most_influential_setting": "Unfrozen Layers"
+}

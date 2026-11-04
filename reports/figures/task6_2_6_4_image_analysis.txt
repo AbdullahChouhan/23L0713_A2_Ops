@@ -1,0 +1,21 @@
+==============================================================================
+Task 6.2 & 6.4 — Dockerfile Verification, Non-Root User & Image Size Optimization
+Project: 23L0713_A2_Ops | Student: Abdullah Chouhan (23L0713)
+==============================================================================
+$ docker build -t 23l0713_a2_ops_web:latest -f Dockerfile .
+ERROR: failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker run --rm 23l0713_a2_ops_web:latest sh -c whoami && id && pwd
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker build -t 23l0713_a2_ops_web:unoptimized -f Dockerfile.unoptimized .
+ERROR: failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker images --format table {{.Repository}}	{{.Tag}}	{{.ID}}	{{.Size}} 23l0713_a2_ops_web
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker history --no-trunc=false 23l0713_a2_ops_web:latest
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker history --no-trunc=false 23l0713_a2_ops_web:unoptimized
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.

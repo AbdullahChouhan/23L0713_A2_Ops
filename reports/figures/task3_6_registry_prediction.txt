@@ -1,0 +1,11 @@
+============================================================================
+Task 3.6 — MLflow Model Registry '@champion' Alias Load & Inference
+Project: 23L0713_A2_Ops | Student: Abdullah Chouhan (23L0713)
+============================================================================
+Registry URI Used : https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops.mlflow (models:/VisionGuard_23L0713_Classifier@champion)
+Model Name & Alias: models:/VisionGuard_23L0713_Classifier@champion
+Test Image Path   : data/raw/AiArtData/AiArtData/AI_image.png
+Ground-Truth Class: AI (label=1)
+Raw P(AI) Score   : 0.7063
+Predicted Verdict : AI-Generated (Confidence: 70.63%)
+============================================================================

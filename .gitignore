@@ -1,0 +1,38 @@
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Secrets & local environment variables (Task 3.2 & 6.3)
+.env
+.env.local
+
+# Python bytecode & caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+
+# DVC tracked data & local cache
+/data/raw
+.dvc/cache/
+.dvc/tmp/
+
+# Local MLflow & Keras Tuner artifacts
+mlruns/
+mlartifacts/
+kt_dir/
+kt_toy_dir/
+toy_labs/dvc_toy_work/
+toy_labs/dvc_local_remote/
+toy_labs/project_dvc_remote/
+toy_labs/docker_warmup_html/
+Assignment 2.docx
+
+# Local SQLite database & temporary files
+*.db
+*.sqlite3
+~$*
+.DS_Store
+Thumbs.db

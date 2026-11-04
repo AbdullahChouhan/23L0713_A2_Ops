@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <div class="card-header-row">
+        <div>
+            <h1>Database Prediction History Trail</h1>
+            <p class="subtitle">
+                Permanent, queryable audit record of every inference request processed by VisionGuard (<strong>{{ config.project_name }}</strong>).
+            </p>
+        </div>
+        <a href="{{ url_for('index') }}" class="btn-primary">+ New Image Check</a>
+    </div>
+
+    {% if logs %}
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Log ID</th>
+                    <th>When (UTC Timestamp)</th>
+                    <th>Sanitized Filename</th>
+                    <th>Dimensions / Format</th>
+                    <th>Size (KB)</th>
+                    <th>What Was Decided</th>
+                    <th>How Confidently</th>
+                    <th>Raw P(AI)</th>
+                    <th>Threshold</th>
+                    <th>By Which Model</th>
+                    <th>Inference Source</th>
+                    <th>Latency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in logs %}
+                <tr>
+                    <td><strong>#{{ row.id }}</strong></td>
+                    <td>{{ row.created_at }}</td>
+                    <td><code>{{ row.filename }}</code></td>
+                    <td>{{ row.image_dimensions }}</td>
+                    <td>{{ "%.1f"|format(row.file_size_kb) }}</td>
+                    <td>
+                        <span class="badge {% if row.verdict == 'AI-Generated' %}badge-ai{% else %}badge-real{% endif %}">
+                            {{ row.verdict }}
+                        </span>
+                    </td>
+                    <td><strong>{{ "%.2f"|format(row.confidence_pct) }}%</strong></td>
+                    <td>{{ "%.4f"|format(row.prob_ai) }}</td>
+                    <td>{{ "%.2f"|format(row.threshold) }}</td>
+                    <td><code>{{ row.model_version }}</code></td>
+                    <td><code>{{ row.inference_source }}</code></td>
+                    <td>{{ "%.1f"|format(row.latency_ms) }} ms</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No predictions have been logged yet. Upload an image to populate the database trail.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

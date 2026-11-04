@@ -1,0 +1,4 @@
+Class,Total Files,Corrupt / Unreadable,Exact Duplicates (Removed),Duplicate Files Involved,Clean Unique Images,Width Min (px),Width Median (px),Width Max (px),Height Min (px),Height Median (px),Height Max (px),Size Min (KB),Size Median (KB),Size Max (KB)
+AI,539,0,1,2,538,225,1024.0,6000,135,800.0,4001,11.46,195.08,5494.32
+Real,436,0,0,0,436,183,920.0,8495,158,720.0,7091,11.05,141.44,9956.4
+Total / Overall,975,0,1,2,974,183,1024.0,8495,135,768.0,7091,11.05,165.13,9956.4

@@ -1,0 +1,7 @@
+Run Name,Run ID,Backbone,Img Size,LR,Augment,Unfrozen,Logging,Val Loss,Val AUC,Test Acc,Test F1,Test ROC-AUC,Change Tested
+Run1_Baseline_CNN_160px_lr1e-3_ManualLog,f0aec6efe51d4c01bc6136f8fc9af4b5,Scratch_CNN,160x160,0.001,True,0,manual,0.6867,0.6286,0.551,0.7105,0.5827,"Baseline custom CNN trained from scratch (160x160, LR=1e-3, Augmented)"
+Run2_MobileNetV2_Frozen_160px_lr1e-3_Autolog,784eaf0c595a481ab91cfed4a3dadddb,MobileNetV2,160x160,0.001,True,0,autolog,0.5217,0.8436,0.6259,0.712,0.7705,"Changed backbone: Scratch CNN -> Pretrained MobileNetV2 (frozen, Autologged)"
+Run3_MobileNetV2_Frozen_NoAug_160px_lr1e-3,307ec3c14c6b4c22bcb5e34abc139999,MobileNetV2,160x160,0.001,False,0,manual,0.4272,0.8891,0.7143,0.7667,0.792,Changed augmentation: Disabled random training augmentation (augment=False)
+Run4_MobileNetV2_Unfreeze25_160px_lr1e-4_Champion,1e8214947baf4893a23a5594c3b12127,MobileNetV2,160x160,0.0001,True,25,manual,0.4824,0.8694,0.7415,0.7564,0.7907,Changed frozen layers & LR: Unfroze top 25 layers with fine-tuning LR=1e-4
+Run5_MobileNetV2_Unfreeze25_160px_lr1e-3_HighLR,346e74df6600449e9e64248735f32319,MobileNetV2,160x160,0.001,True,25,manual,0.733,0.6807,0.449,0.0,0.6373,Changed learning rate: High LR (1e-3) with unfrozen layers degrades pretrained weights
+Run6_MobileNetV2_Unfreeze25_128px_lr1e-4_SmallRes,9c7ebde9b547401daf5abfb6b45c2982,MobileNetV2,128x128,0.0001,True,25,manual,0.5214,0.8387,0.7415,0.7889,0.7961,Changed image size: Reduced input resolution from 160x160 -> 128x128

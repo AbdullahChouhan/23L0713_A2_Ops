@@ -1,0 +1,11 @@
+class_label,image_format,color_mode,count
+AI,JPEG,L,1
+AI,JPEG,RGB,428
+AI,PNG,P,14
+AI,PNG,RGB,61
+AI,PNG,RGBA,35
+Real,JPEG,L,6
+Real,JPEG,RGB,397
+Real,PNG,P,9
+Real,PNG,RGB,10
+Real,PNG,RGBA,14

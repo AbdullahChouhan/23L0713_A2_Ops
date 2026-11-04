@@ -1,0 +1,29 @@
+==============================================================================
+Task 6.1 — Docker Warm-Up Execution Log (Project: 23L0713_A2_Ops)
+Student: Abdullah Chouhan (23L0713)
+==============================================================================
+$ docker pull nginx:alpine
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker run -d --name vg_warmup_nginx -p 8088:80 -v D:\Projects\FAST\MLOPs\A2\toy_labs\docker_warmup_html:/usr/share/nginx/html:ro nginx:alpine
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+HTTP check note: HTTPConnectionPool(host='127.0.0.1', port=8088): Max retries exceeded with url: / (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=8088): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+
+$ docker ps --filter name=vg_warmup_nginx
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker logs vg_warmup_nginx
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker exec vg_warmup_nginx sh -c whoami && uname -a && cat /usr/share/nginx/html/index.html
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker images nginx:alpine
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker rm -f vg_warmup_nginx
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+
+$ docker rmi nginx:alpine
+failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.

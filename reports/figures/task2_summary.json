@@ -1,0 +1,65 @@
+{
+  "baseline_metrics": {
+    "Model": "Baseline CNN (Scratch)",
+    "Threshold": 0.52,
+    "Accuracy": 0.5238,
+    "Precision": 0.5478,
+    "Recall": 0.7778,
+    "F1-Score": 0.6429,
+    "ROC-AUC": 0.5827,
+    "TN": 14,
+    "FP": 52,
+    "FN": 18,
+    "TP": 63
+  },
+  "mobilenetv2_default_metrics": {
+    "Model": "MobileNetV2 Fine-Tuned (Default T=0.50)",
+    "Threshold": 0.5,
+    "Accuracy": 0.7075,
+    "Precision": 0.7159,
+    "Recall": 0.7778,
+    "F1-Score": 0.7456,
+    "ROC-AUC": 0.8122,
+    "TN": 41,
+    "FP": 25,
+    "FN": 18,
+    "TP": 63
+  },
+  "mobilenetv2_tuned_metrics": {
+    "Model": "MobileNetV2 Fine-Tuned (Tuned T=0.25)",
+    "Threshold": 0.25,
+    "Accuracy": 0.6803,
+    "Precision": 0.6545,
+    "Recall": 0.8889,
+    "F1-Score": 0.7539,
+    "ROC-AUC": 0.8122,
+    "TN": 28,
+    "FP": 38,
+    "FN": 9,
+    "TP": 72
+  },
+  "optimal_threshold_tl": 0.25,
+  "optimal_threshold_base": 0.52,
+  "trainable_info": {
+    "stage1_frozen_backbone_trainable_layers": [
+      "head_bn",
+      "head_dense",
+      "prob_ai"
+    ],
+    "stage2_unfrozen_last_block_trainable_layers": [
+      "block_14_project",
+      "block_15_expand",
+      "block_15_depthwise",
+      "block_15_project",
+      "block_16_expand",
+      "block_16_depthwise",
+      "block_16_project",
+      "Conv_1",
+      "head_bn",
+      "head_dense",
+      "prob_ai"
+    ],
+    "baseline_best_epoch": 1,
+    "transfer_best_epoch": 8
+  }
+}

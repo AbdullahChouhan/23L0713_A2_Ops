@@ -1,0 +1,75 @@
+{
+  "project": "23L0713_A2_Ops",
+  "total_files": 975,
+  "corrupt_files_count": 0,
+  "duplicate_files_removed": 1,
+  "clean_unique_files": 974,
+  "splits": {
+    "train": 681,
+    "val": 146,
+    "test": 147
+  },
+  "formats": {
+    "JPEG": 832,
+    "PNG": 143
+  },
+  "color_modes": {
+    "RGB": 896,
+    "RGBA": 49,
+    "P": 23,
+    "L": 7
+  },
+  "summary_table": [
+    {
+      "Class": "AI",
+      "Total Files": 539,
+      "Corrupt / Unreadable": 0,
+      "Exact Duplicates (Removed)": 1,
+      "Duplicate Files Involved": 2,
+      "Clean Unique Images": 538,
+      "Width Min (px)": 225,
+      "Width Median (px)": 1024.0,
+      "Width Max (px)": 6000,
+      "Height Min (px)": 135,
+      "Height Median (px)": 800.0,
+      "Height Max (px)": 4001,
+      "Size Min (KB)": 11.46,
+      "Size Median (KB)": 195.08,
+      "Size Max (KB)": 5494.32
+    },
+    {
+      "Class": "Real",
+      "Total Files": 436,
+      "Corrupt / Unreadable": 0,
+      "Exact Duplicates (Removed)": 0,
+      "Duplicate Files Involved": 0,
+      "Clean Unique Images": 436,
+      "Width Min (px)": 183,
+      "Width Median (px)": 920.0,
+      "Width Max (px)": 8495,
+      "Height Min (px)": 158,
+      "Height Median (px)": 720.0,
+      "Height Max (px)": 7091,
+      "Size Min (KB)": 11.05,
+      "Size Median (KB)": 141.44,
+      "Size Max (KB)": 9956.4
+    },
+    {
+      "Class": "Total / Overall",
+      "Total Files": 975,
+      "Corrupt / Unreadable": 0,
+      "Exact Duplicates (Removed)": 1,
+      "Duplicate Files Involved": 2,
+      "Clean Unique Images": 974,
+      "Width Min (px)": 183,
+      "Width Median (px)": 1024.0,
+      "Width Max (px)": 8495,
+      "Height Min (px)": 135,
+      "Height Median (px)": 768.0,
+      "Height Max (px)": 7091,
+      "Size Min (KB)": 11.05,
+      "Size Median (KB)": 165.13,
+      "Size Max (KB)": 9956.4
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+# Task 6.3: Docker Compose Stack for VisionGuard (23L0713_A2_Ops)
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: 23l0713_a2_ops_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - visionguard_net
+    # No host 'ports:' published — database is strictly isolated on visionguard_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 23l0713_a2_ops_web:latest
+    container_name: 23l0713_a2_ops_web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PROJECT_NAME: ${PROJECT_NAME:-23L0713_A2_Ops}
+      MODEL_PATH: /app/models/champion_model.keras
+      MODEL_VERSION: ${MODEL_VERSION:-VisionGuard-MobileNetV2-v2@champion}
+      DECISION_THRESHOLD: ${DECISION_THRESHOLD:-0.50}
+      MAX_CONTENT_LENGTH_MB: ${MAX_CONTENT_LENGTH_MB:-5.0}
+      FLASK_DEBUG: "0"
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      CLOUD_API_URL: ${CLOUD_API_URL:-}
+      CLOUD_API_KEY: ${CLOUD_API_KEY:-vg_api_secret_23L0713}
+      USE_CLOUD_API: ${USE_CLOUD_API:-false}
+    ports:
+      - "${PORT:-5000}:5000"
+    volumes:
+      - ./models:/app/models:ro
+    networks:
+      - visionguard_net
+
+volumes:
+  pgdata:
+    name: 23l0713_a2_ops_pgdata
+
+networks:
+  visionguard_net:
+    name: 23l0713_a2_ops_net
+    driver: bridge

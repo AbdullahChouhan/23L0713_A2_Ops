@@ -1,0 +1,23 @@
+Layer Name,Layer Type,Output Shape,Total Params,Trainable Params,Non-Trainable Params
+input_rgb,InputLayer,"(None, 160, 160, 3)",0,0,0
+rescale_0_1,Rescaling,"(None, 160, 160, 3)",0,0,0
+conv1,Conv2D,"(None, 160, 160, 32)",864,864,0
+bn1,BatchNormalization,"(None, 160, 160, 32)",128,64,64
+relu1,Activation,"(None, 160, 160, 32)",0,0,0
+pool1,MaxPooling2D,"(None, 80, 80, 32)",0,0,0
+drop1,Dropout,"(None, 80, 80, 32)",0,0,0
+conv2,Conv2D,"(None, 80, 80, 64)",18432,18432,0
+bn2,BatchNormalization,"(None, 80, 80, 64)",256,128,128
+relu2,Activation,"(None, 80, 80, 64)",0,0,0
+pool2,MaxPooling2D,"(None, 40, 40, 64)",0,0,0
+drop2,Dropout,"(None, 40, 40, 64)",0,0,0
+conv3,Conv2D,"(None, 40, 40, 128)",73728,73728,0
+bn3,BatchNormalization,"(None, 40, 40, 128)",512,256,256
+relu3,Activation,"(None, 40, 40, 128)",0,0,0
+pool3,MaxPooling2D,"(None, 20, 20, 128)",0,0,0
+drop3,Dropout,"(None, 20, 20, 128)",0,0,0
+gap,GlobalAveragePooling2D,"(None, 128)",0,0,0
+dense_fc,Dense,"(None, 64)",8256,8256,0
+bn_fc,BatchNormalization,"(None, 64)",256,128,128
+drop_fc,Dropout,"(None, 64)",0,0,0
+prob_ai,Dense,"(None, 1)",65,65,0

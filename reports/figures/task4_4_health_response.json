@@ -1,0 +1,15 @@
+{
+  "cloud_api_url": null,
+  "database_status": "connected",
+  "debug_mode": false,
+  "decision_threshold": 0.5,
+  "model_error": null,
+  "model_loaded": true,
+  "model_path": "models/champion_model.keras",
+  "model_version": "VisionGuard-MobileNetV2-v2@champion",
+  "project": "23L0713_A2_Ops",
+  "status": "healthy",
+  "student": "Abdullah Chouhan (23L0713)",
+  "timestamp": "2026-11-04T22:20:58+00:00",
+  "use_cloud_api": false
+}

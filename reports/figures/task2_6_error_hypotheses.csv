@@ -1,0 +1,11 @@
+Case #,File Name,True Class,Predicted,Error Type,P(AI),Orig Size,Texture Var,Diagnostic Hypothesis
+1,WBCSD-People-and-Society_i1140.jpg,Real (0),AI (1),FP (Real -> AI),0.9562,1140x641,368.6,Heavy JPEG compression (142 KB) suppresses natural camera sensor noise
+2,forest-landscape_71767-127.jpg,Real (0),AI (1),FP (Real -> AI),0.9241,626x487,234.4,Heavy JPEG compression (92 KB) suppresses natural camera sensor noise
+3,02-still-for-america-room-loop-superJumbo.jpg,Real (0),AI (1),FP (Real -> AI),0.8967,2048x1365,187.1,Hyper-saturated studio lighting / stylized post-processing resembles AI rendering
+4,hqdefault.jpg,Real (0),AI (1),FP (Real -> AI),0.8951,480x360,574.8,Hyper-saturated studio lighting / stylized post-processing resembles AI rendering
+5,file-20231005-16-1flnlj.jpg,Real (0),AI (1),FP (Real -> AI),0.8447,1920x1280,293.9,Heavy JPEG compression (302 KB) suppresses natural camera sensor noise
+6,sunset-trees-abstract-painting-3.jpg,Real (0),AI (1),FP (Real -> AI),0.7831,800x800,218.6,Heavy JPEG compression (132 KB) suppresses natural camera sensor noise
+7,9780241416907-jacket-large.jpg,Real (0),AI (1),FP (Real -> AI),0.7702,336x500,685.4,Heavy JPEG compression (118 KB) suppresses natural camera sensor noise
+8,visitors-look-at-the-painting-water-serpents-ii-by-austrian-news-photo-1677014327.jpg,Real (0),AI (1),FP (Real -> AI),0.7577,3408x2272,89.3,Smooth gradients / digital illustration style resembles diffusion smoothing
+9,people-person.jpg,Real (0),AI (1),FP (Real -> AI),0.7218,600x591,123.0,Smooth gradients / digital illustration style resembles diffusion smoothing
+10,Untitled-design-2022-09-06T133056.012.png,Real (0),AI (1),FP (Real -> AI),0.6921,940x788,540.4,Heavy JPEG compression (1449 KB) suppresses natural camera sensor noise

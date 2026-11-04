@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-card">
+    <div class="hero-header">
+        <div>
+            <h1>AI-Generated vs. Real Image Classification</h1>
+            <p class="subtitle">
+                Upload an image to inspect whether it was synthesized by generative AI or captured/created as real art/photography.
+                All uploads are validated and processed strictly in-memory without saving files to disk.
+            </p>
+        </div>
+        <div class="status-pill">
+            {% if config.use_cloud_api and config.cloud_api_url %}
+                <span class="dot cloud"></span> Cloud API Active: <code>{{ config.cloud_api_url }}</code>
+            {% else %}
+                <span class="dot online"></span> Inference Engine: <code>{{ config.model_version }}</code>
+            {% endif %}
+        </div>
+    </div>
+
+    <form action="{{ url_for('predict_view') }}" method="post" enctype="multipart/form-data" class="upload-form">
+        <label for="file-input" class="dropzone">
+            <div class="dropzone-icon">🖼️</div>
+            <div class="dropzone-title">Select an image file to analyze</div>
+            <div class="dropzone-hint">
+                Allowed formats: <strong>.JPG, .JPEG, .PNG, .WEBP, .BMP</strong> • Max size: <strong>{{ "%.1f"|format(config.max_content_length_mb) }} MB</strong>
+            </div>
+            <input id="file-input" type="file" name="file" accept=".jpg,.jpeg,.png,.webp,.bmp" required>
+        </label>
+
+        {% if config.cloud_api_url %}
+        <div class="mode-selector">
+            <label>
+                <input type="radio" name="inference_mode" value="cloud" {% if config.use_cloud_api %}checked{% endif %}>
+                Use Deployed Cloud API (<code>{{ config.cloud_api_url }}</code>)
+            </label>
+            <label>
+                <input type="radio" name="inference_mode" value="local" {% if not config.use_cloud_api %}checked{% endif %}>
+                Use Local Champion Model (<code>{{ config.model_path }}</code>)
+            </label>
+        </div>
+        {% endif %}
+
+        <button type="submit" class="btn-primary">Run VisionGuard Verification</button>
+    </form>
+</section>
+
+{% if recent_logs %}
+<section class="card mt-4">
+    <div class="card-header-row">
+        <h2>Recent Database Audit Trail</h2>
+        <a href="{{ url_for('history_view') }}" class="link-btn">View Full History &rarr;</a>
+    </div>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Timestamp (UTC)</th>
+                    <th>Sanitized File</th>
+                    <th>Verdict</th>
+                    <th>Confidence</th>
+                    <th>Raw P(AI)</th>
+                    <th>Model</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in recent_logs %}
+                <tr>
+                    <td>#{{ row.id }}</td>
+                    <td>{{ row.created_at }}</td>
+                    <td><code>{{ row.filename }}</code></td>
+                    <td>
+                        <span class="badge {% if row.verdict == 'AI-Generated' %}badge-ai{% else %}badge-real{% endif %}">
+                            {{ row.verdict }}
+                        </span>
+                    </td>
+                    <td><strong>{{ "%.2f"|format(row.confidence_pct) }}%</strong></td>
+                    <td>{{ "%.4f"|format(row.prob_ai) }}</td>
+                    <td><code>{{ row.model_version }}</code></td>
+                    <td><code>{{ row.inference_source }}</code></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

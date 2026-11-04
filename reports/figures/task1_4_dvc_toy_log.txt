@@ -1,0 +1,163 @@
+==============================================================================
+Task 1.4 — DVC Toy Lab Execution Log (Project: 23L0713_A2_Ops)
+Student: Abdullah Chouhan (23L0713)
+==============================================================================
+
+$ git init -b main
+Initialized empty Git repository in D:/Projects/FAST/MLOPs/A2/toy_labs/dvc_toy_work/.git/
+
+$ git config user.name Abdullah Chouhan
+(exit 0, no output)
+
+$ git config user.email l230713@lhr.nu.edu.pk
+(exit 0, no output)
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc init
+Initialized DVC repository.
+
+You can now commit the changes to git.
+
++---------------------------------------------------------------------+
+|                                                                     |
+|        DVC has enabled anonymous aggregate usage analytics.         |
+|     Read the analytics documentation (and how to opt-out) here:     |
+|             <https://dvc.org/doc/user-guide/analytics>              |
+|                                                                     |
++---------------------------------------------------------------------+
+
+What's next?
+------------
+- Check out the documentation: <https://dvc.org/doc>
+- Get help and share ideas: <https://dvc.org/chat>
+- Star us on GitHub: <https://github.com/iterative/dvc>
+
+$ git add .dvc .dvcignore
+(exit 0, no output)
+
+$ git commit -m Initialize DVC in toy lab (23L0713_A2_Ops)
+[main (root-commit) df69265] Initialize DVC in toy lab (23L0713_A2_Ops)
+ 3 files changed, 6 insertions(+)
+ create mode 100644 .dvc/.gitignore
+ create mode 100644 .dvc/config
+ create mode 100644 .dvcignore
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc remote add -d localstore D:\Projects\FAST\MLOPs\A2\toy_labs\dvc_local_remote
+Setting 'localstore' as a default remote.
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc remote add origin s3://dvc
+(exit 0, no output)
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc remote modify origin endpointurl https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops.s3
+(exit 0, no output)
+
+--- [Step 1] Created samples.csv (v1: 3 rows) ---
+image_id,class_label,width,height
+img_001.jpg,AI,512,512
+img_002.jpg,Real,800,600
+img_003.jpg,AI,1024,1024
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc add samples.csv
+To track the changes with git, run:
+
+	git add samples.csv.dvc .gitignore
+
+To enable auto staging, run:
+
+	dvc config core.autostage true
+
+--- [Pointer File v1: samples.csv.dvc] ---
+outs:
+- md5: ce3fedf6bb1797bd0bea57565cc45f49
+  size: 111
+  hash: md5
+  path: samples.csv
+
+$ git add samples.csv.dvc .gitignore .dvc/config
+(exit 0, no output)
+
+$ git commit -m Track samples.csv v1 (3 rows) with DVC
+[main 85ee9a6] Track samples.csv v1 (3 rows) with DVC
+ 3 files changed, 13 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 samples.csv.dvc
+
+$ git tag v1.0
+(exit 0, no output)
+
+--- [Step 2] Modified samples.csv (v2: 6 rows) ---
+image_id,class_label,width,height
+img_001.jpg,AI,512,512
+img_002.jpg,Real,800,600
+img_003.jpg,AI,1024,1024
+img_004.jpg,Real,640,480
+img_005.jpg,AI,768,768
+img_006.jpg,Real,1200,900
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc add samples.csv
+To track the changes with git, run:
+
+	git add samples.csv.dvc
+
+To enable auto staging, run:
+
+	dvc config core.autostage true
+
+--- [Pointer File v2: samples.csv.dvc] ---
+outs:
+- md5: 1f74b00e5e0b5cfbd3f8b477dbec0fd1
+  size: 188
+  hash: md5
+  path: samples.csv
+
+$ git add samples.csv.dvc
+(exit 0, no output)
+
+$ git commit -m Update samples.csv to v2 (6 rows) with DVC
+[main f92527a] Update samples.csv to v2 (6 rows) with DVC
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+$ git tag v2.0
+(exit 0, no output)
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc push -r localstore
+1 file pushed
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc push -r origin
+1 file pushed
+
+--- [Step 3] Returning to older version (v1.0) via Git + DVC checkout ---
+
+$ git checkout v1.0 samples.csv.dvc
+Updated 1 path from 06563c8
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc checkout
+M       samples.csv
+--- Content of samples.csv after checking out v1.0 ---
+image_id,class_label,width,height
+img_001.jpg,AI,512,512
+img_002.jpg,Real,800,600
+img_003.jpg,AI,1024,1024
+
+--- [Step 4] Restoring v2.0 pointer, deleting local data & cache, and running dvc pull ---
+
+$ git checkout main samples.csv.dvc
+Updated 1 path from 810ba5f
+samples.csv exists after deletion? False
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc pull -r localstore
+A       samples.csv
+1 file added and 1 file fetched
+samples.csv exists after dvc pull? True
+--- Content of samples.csv after dvc pull ---
+image_id,class_label,width,height
+img_001.jpg,AI,512,512
+img_002.jpg,Real,800,600
+img_003.jpg,AI,1024,1024
+img_004.jpg,Real,640,480
+img_005.jpg,AI,768,768
+img_006.jpg,Real,1200,900
+
+$ git log --oneline --decorate
+f92527a (HEAD -> main, tag: v2.0) Update samples.csv to v2 (6 rows) with DVC
+85ee9a6 (tag: v1.0) Track samples.csv v1 (3 rows) with DVC
+df69265 Initialize DVC in toy lab (23L0713_A2_Ops)

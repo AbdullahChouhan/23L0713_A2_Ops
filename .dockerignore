@@ -1,0 +1,24 @@
+# Exclude virtual environments, secrets, raw dataset, and caches from Docker build context
+.venv/
+venv/
+.git/
+.gitignore
+.dvc/
+data/raw/
+mlruns/
+mlartifacts/
+kt_dir/
+kt_toy_dir/
+toy_labs/
+reports/
+__pycache__/
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+.env
+.env.local
+.pytest_cache/
+.ruff_cache/
+Assignment 2.docx
+~$*

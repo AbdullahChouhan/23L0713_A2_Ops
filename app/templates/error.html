@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card error-card">
+    <div class="error-badge">HTTP {{ status_code }} — Request Validation Error</div>
+    <h1>{{ error_title }}</h1>
+    <p class="error-msg">{{ error_message }}</p>
+    <div class="caveat-box">
+        <strong>VisionGuard Validation Policy ({{ config.project_name }}):</strong>
+        <ul>
+            <li>Allowed extensions: <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>, <code>.webp</code>, <code>.bmp</code></li>
+            <li>Maximum upload size: <code>{{ "%.1f"|format(config.max_content_length_mb) }} MB</code></li>
+            <li>Uploaded bytes must decode cleanly as a valid non-truncated image stream in memory.</li>
+        </ul>
+    </div>
+    <div class="action-row">
+        <a href="{{ url_for('index') }}" class="btn-primary">&larr; Return to Upload Page</a>
+    </div>
+</section>
+{% endblock %}

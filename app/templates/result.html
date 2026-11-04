@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card result-card">
+    <div class="card-header-row">
+        <div>
+            <h1>VisionGuard Inspection Result</h1>
+            <p class="subtitle">Database Audit Record <strong>#{{ log_entry.id }}</strong> • Logged at {{ log_entry.created_at }}</p>
+        </div>
+        <a href="{{ url_for('index') }}" class="btn-secondary">&larr; Analyze Another Image</a>
+    </div>
+
+    <div class="result-grid">
+        <div class="preview-panel">
+            <img src="{{ preview_uri }}" alt="Uploaded Image Preview" class="preview-img">
+            <div class="meta-box">
+                <div><strong>Sanitized Filename:</strong> <code>{{ log_entry.filename }}</code></div>
+                <div><strong>Original Dimensions:</strong> {{ log_entry.image_dimensions }}</div>
+                <div><strong>File Size:</strong> {{ "%.2f"|format(log_entry.file_size_kb) }} KB</div>
+                <div><strong>Inference Source:</strong> <code>{{ log_entry.inference_source }}</code></div>
+                <div><strong>Inference Latency:</strong> {{ "%.2f"|format(log_entry.latency_ms) }} ms</div>
+            </div>
+        </div>
+
+        <div class="verdict-panel">
+            <div class="verdict-banner {% if result.is_ai %}verdict-ai{% else %}verdict-real{% endif %}">
+                <div class="verdict-label">Predicted Classification Verdict</div>
+                <div class="verdict-value">{{ result.verdict }}</div>
+                <div class="verdict-conf">Confidence: <strong>{{ "%.2f"|format(result.confidence_pct) }}%</strong></div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-labels">
+                    <span>Real (0.00)</span>
+                    <span>Threshold ({{ "%.2f"|format(result.threshold) }})</span>
+                    <span>AI-Generated (1.00)</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill {% if result.is_ai %}fill-ai{% else %}fill-real{% endif %}"
+                         style="width: {{ (result.prob_ai * 100)|round(1) }}%;"></div>
+                </div>
+                <div class="prob-readout">
+                    Raw Model Probability <code>P(AI) = {{ "%.4f"|format(result.prob_ai) }}</code> • Model: <code>{{ result.model_version }}</code>
+                </div>
+            </div>
+
+            <div class="caveat-box">
+                <h3>⚠️ Honest Caveat &amp; Operational Limitations</h3>
+                <p>{{ result.caveat }}</p>
+            </div>
+
+            <div class="action-row">
+                <a href="{{ url_for('history_view') }}" class="btn-primary">View Database History Trail</a>
+                <a href="{{ url_for('index') }}" class="btn-secondary">Upload New Image</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

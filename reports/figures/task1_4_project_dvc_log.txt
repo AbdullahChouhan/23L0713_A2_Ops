@@ -1,0 +1,29 @@
+==============================================================================
+Task 1.4 — Project Dataset DVC Tracking Log (23L0713_A2_Ops)
+==============================================================================
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc remote add -f -d origin s3://dvc
+Setting 'origin' as a default remote.
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc remote modify origin endpointurl https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops.s3
+(exit 0, no output)
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc remote add -f localstore D:\Projects\FAST\MLOPs\A2\toy_labs\project_dvc_remote
+(exit 0, no output)
+
+$ D:\Projects\FAST\MLOPs\A2\.venv\Scripts\python.exe -m dvc add data/raw
+To track the changes with git, run:
+
+	git add '.dvc\.gitignore' 'data\raw.dvc'
+
+To enable auto staging, run:
+
+	dvc config core.autostage true
+
+--- [Contents of data/raw.dvc pointer file] ---
+outs:
+- md5: b2cec67839f742df4653f66d4bcbbafb.dir
+  size: 503783378
+  nfiles: 975
+  hash: md5
+  path: raw

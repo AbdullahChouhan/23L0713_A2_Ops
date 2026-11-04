@@ -1,0 +1,5 @@
+run_id,run_name,tracking_uri,learning_rate,final_val_accuracy,final_val_loss
+29c35b6743eb40609e2a8d93a8db0d6e,LocalToy_FashionMNIST_lr_0.001,sqlite:///mlflow_local.db,0.001,0.7867,0.5512
+523d3b531aed4ad4b7bc5389950d457a,LocalToy_FashionMNIST_lr_0.01,sqlite:///mlflow_local.db,0.01,0.8133,0.5115
+40922cb569fd41778f45d965e75fac0f,DagsHubToy_FashionMNIST_lr_0.001,https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops.mlflow,0.001,0.7867,0.5512
+f062525e20444c689123d31d6d7d14b3,DagsHubToy_FashionMNIST_lr_0.01,https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops.mlflow,0.01,0.8133,0.5115

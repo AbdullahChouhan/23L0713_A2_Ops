@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionGuard ({{ config.project_name }}) — AI vs Real Image Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-inner">
+            <div class="brand">
+                <span class="brand-badge">VG</span>
+                <div>
+                    <a href="{{ url_for('index') }}" class="brand-title">VisionGuard</a>
+                    <span class="brand-sub">{{ config.project_name }} • {{ config.student_name }} ({{ config.roll_number }})</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">Upload &amp; Classify</a>
+                <a href="{{ url_for('history_view') }}" class="nav-link">History Trail (DB)</a>
+                <a href="{{ url_for('health_check') }}" class="nav-link">Health Check</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span>Project: <strong>{{ config.project_name }}</strong> | Model: <code>{{ config.model_version }}</code> | Threshold: <code>{{ "%.2f"|format(config.decision_threshold) }}</code></span>
+            <span>FAST-NUCES MLOps Assignment 2 — Abdullah Chouhan (23L0713)</span>
+        </div>
+    </footer>
+</body>
+</html>
