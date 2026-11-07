@@ -534,7 +534,14 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
     if toy_ci_img.exists():
         pdf.add_figure(
             toy_ci_img,
-            "Figure 6.6: GitHub Actions UI showing both the Red (failed) and Green (passed) CI runs.",
+            "Figure 6.6a: GitHub Actions UI in 23L0713_A2_ToyCI showing both Commit 1 (Red failed run) and Commit 2 (Green passed run).",
+            width=175.0,
+        )
+    main_ci_img = fig_dir / "user_main_ci_actions.jpg"
+    if main_ci_img.exists():
+        pdf.add_figure(
+            main_ci_img,
+            "Figure 6.6b: GitHub Actions UI in main project repository (23L0713_A2_Ops) showing automated lint, pytest, and Docker build runs.",
             width=175.0,
         )
 
