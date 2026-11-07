@@ -422,9 +422,16 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
             ["Run Name", "Backbone", "Img Size", "LR", "Augment", "Unfrozen", "Logging", "Val AUC", "Test Acc", "Test F1", "Test ROC-AUC"]
         ]
         pdf.add_dataframe_table(c_df, "Table 3.5: Comparison of 6 VisionGuard Experiment Runs Logged to DagsHub MLflow")
+    dagshub_img = fig_dir / "user_dagshub_experiments.jpg"
+    if dagshub_img.exists():
+        pdf.add_figure(
+            dagshub_img,
+            "Figure 3.2/3.5a: DagsHub (AbdullahChouhan/23L0713_A2_Ops) Experiments UI showing all logged Toy, VisionGuard, and Registry runs.",
+            width=175.0,
+        )
     pdf.add_figure(
         fig_dir / "task3_5_comparison_chart.png",
-        "Figure 3.5: Test F1-Score and Test ROC-AUC comparison across all 6 VisionGuard experiment runs.",
+        "Figure 3.5b: Test F1-Score and Test ROC-AUC comparison across all 6 VisionGuard experiment runs.",
     )
 
     pdf.subtask_heading("Task 3.6: MLflow Model Registry & Loading by '@champion' Alias")
@@ -533,9 +540,16 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
         "3. Created a Render Docker Web Service named 23L0713_A2_Ops connected to the main branch.\n"
         f"4. Verified live container readiness at {cloud_url}/health (HTTP 200, model_loaded=true, debug_mode=false) and tested multipart image inference against POST {cloud_url}/api/predict.",
     )
+    render_dash_img = fig_dir / "user_render_dashboard.png"
+    if render_dash_img.exists():
+        pdf.add_figure(
+            render_dash_img,
+            "Figure 7.1a: Render Cloud Dashboard showing live Docker Web Service 23L0713_A2_Ops (https://two3l0713-a2-ops.onrender.com).",
+            width=175.0,
+        )
     pdf.add_figure(
         fig_dir / "task7_api_test_evidence.png",
-        "Figure 7.1: REST API POST /api/predict multipart request and logged JSON response payloads.",
+        "Figure 7.1b: Live Render Cloud API (POST https://two3l0713-a2-ops.onrender.com/api/predict) multipart request and logged JSON response.",
     )
 
     pdf.subtask_heading("Task 8.1: Integrating Localhost Flask UI with Cloud API & Database History")
@@ -543,9 +557,16 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
         "How Local Flask Communicates with the Cloud Model API",
         "When USE_CLOUD_API=true and CLOUD_API_URL is set in .env (or selected via the radio toggle on the Flask upload form), the local Flask server (http://localhost:5000) validates the uploaded image in memory and dispatches a multipart POST request with header X-API-Key to {CLOUD_API_URL}/api/predict. It parses the returned JSON verdict, confidence, raw P(AI) score, and model version, records a permanent audit row in prediction_logs with inference_source='cloud_api', and renders both the result page and the /history view.",
     )
+    flask_ui_img = fig_dir / "user_flask_ui_cloud.png"
+    if flask_ui_img.exists():
+        pdf.add_figure(
+            flask_ui_img,
+            "Figure 8.1a: VisionGuard Flask Web UI (Task 4.3 & Task 8) connected to https://two3l0713-a2-ops.onrender.com with live Database Audit Trail.",
+            width=175.0,
+        )
     pdf.add_figure(
         fig_dir / "task8_multiple_inputs_results.png",
-        "Figure 8.1: Six test inputs (3 AI-Generated, 3 Real) evaluated through the VisionGuard API and logged in the database history trail.",
+        "Figure 8.1b: Six test inputs (3 AI-Generated, 3 Real) evaluated through the live Render Cloud API and logged in the database history trail.",
     )
 
     pdf.output(str(output_pdf))
