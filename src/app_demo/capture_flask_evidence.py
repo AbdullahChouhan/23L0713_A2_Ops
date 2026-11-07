@@ -122,8 +122,8 @@ def main() -> None:
         out_dir / "task4_2_three_failure_cases.png",
     )
 
-    # 3. Task 4.3, 5, 7 & 8: Multiple Test Inputs Classified & Logged in Database
-    # Raise max_content_length_mb to 10 MB for real dataset images
+    # 3. Task 4.3, 5, 7 & 8: Multiple Test Inputs Classified via Live Render Cloud API & Local Flask
+    cloud_url = "https://two3l0713-a2-ops.onrender.com"
     cfg_full = AppConfig(
         project_name="23L0713_A2_Ops",
         model_path="models/champion_model.keras",
@@ -132,6 +132,8 @@ def main() -> None:
         max_content_length_mb=10.0,
         database_url=f"sqlite:///{db_path.as_posix()}",
         flask_debug=False,
+        cloud_api_url=cloud_url,
+        use_cloud_api=True,
     )
     app_full = create_app(cfg_full)
     client_full = app_full.test_client()
@@ -154,28 +156,39 @@ def main() -> None:
     api_responses = []
     fig, axes = plt.subplots(2, 3, figsize=(15, 8))
     fig.suptitle(
-        "VisionGuard (23L0713_A2_Ops) — Task 4.3, 7 & 8: Multiple Inputs Evaluated via API & Flask UI",
-        fontsize=13,
+        f"VisionGuard (23L0713_A2_Ops) — Task 7 & 8: Multiple Inputs Evaluated via Live Render API ({cloud_url})",
+        fontsize=12.5,
         fontweight="bold",
         y=0.98,
     )
 
+    import requests as ext_requests
+
     for idx, (_, row) in enumerate(sample_rows.iterrows()):
         img_path = Path(row["file_path"])
         raw_bytes = img_path.read_bytes()
-        resp = client_full.post(
-            "/api/predict",
-            data={"file": (io.BytesIO(raw_bytes), img_path.name)},
+
+        # Task 7: Direct call to live Render Cloud API endpoint
+        live_r = ext_requests.post(
+            f"{cloud_url}/api/predict",
+            files={"file": (img_path.name, raw_bytes, "application/octet-stream")},
+            timeout=45,
+        )
+        payload = live_r.json()
+        api_responses.append(payload)
+
+        # Task 8: Also call local Flask /predict view (which forwards to cloud_url and logs to local DB)
+        _ = client_full.post(
+            "/predict",
+            data={"file": (io.BytesIO(raw_bytes), img_path.name), "inference_mode": "cloud"},
             content_type="multipart/form-data",
         )
-        payload = resp.get_json()
-        api_responses.append(payload)
 
         ax = axes.flat[idx]
         with Image.open(img_path) as img:
             ax.imshow(img.convert("RGB"))
         ax.set_title(
-            f"Log #{payload['log_id']} | File: {payload['filename'][:22]}\n"
+            f"Cloud Log #{payload['log_id']} | File: {payload['filename'][:20]}\n"
             f"Verdict: {payload['verdict']} ({payload['confidence_pct']:.1f}%)\n"
             f"P(AI)={payload['prob_ai']:.4f} • {payload['latency_ms']:.1f} ms",
             fontsize=9,
@@ -192,8 +205,8 @@ def main() -> None:
 
     # Render Postman / API Request-Response Evidence Figure for Task 7
     render_terminal_box_figure(
-        "VisionGuard (23L0713_A2_Ops) — Task 7 REST API Request & Logged JSON Response",
-        "POST /api/predict (Multipart Form-Data) | Student: Abdullah Chouhan (23L0713)",
+        f"VisionGuard (23L0713_A2_Ops) — Task 7 Live Render Cloud API Response ({cloud_url}/api/predict)",
+        "POST https://two3l0713-a2-ops.onrender.com/api/predict | Student: Abdullah Chouhan (23L0713)",
         [
             (
                 f"Sample 1 (AI-Generated Input: {api_responses[0]['filename']}) -> HTTP 200 OK",

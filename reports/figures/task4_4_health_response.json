@@ -1,5 +1,5 @@
 {
-  "cloud_api_url": null,
+  "cloud_api_url": "https://two3l0713-a2-ops.onrender.com",
   "database_status": "connected",
   "debug_mode": false,
   "decision_threshold": 0.5,
@@ -10,6 +10,6 @@
   "project": "23L0713_A2_Ops",
   "status": "healthy",
   "student": "Abdullah Chouhan (23L0713)",
-  "timestamp": "2026-11-04T22:20:58+00:00",
-  "use_cloud_api": false
+  "timestamp": "2026-11-07T19:37:27+00:00",
+  "use_cloud_api": true
 }

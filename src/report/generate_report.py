@@ -165,7 +165,7 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
     pdf.set_y(60)
     pdf.set_text_color(20, 25, 35)
     commit_hash = get_git_commit_full()
-    cloud_url = os.getenv("CLOUD_API_URL") or "https://abdullahchouhan-23l0713-a2-ops.hf.space"
+    cloud_url = os.getenv("CLOUD_API_URL") or "https://two3l0713-a2-ops.onrender.com"
 
     front_matter_df = pd.DataFrame(
         [
@@ -471,7 +471,7 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
     )
     db_csv = fig_dir / "task5_database_history_trail.csv"
     if db_csv.exists():
-        h_df = pd.read_csv(db_csv)[["id", "created_at", "filename", "verdict", "confidence_pct", "prob_ai", "model_version", "latency_ms"]]
+        h_df = pd.read_csv(db_csv)[["id", "created_at", "filename", "verdict", "confidence_pct", "prob_ai", "inference_source", "latency_ms"]]
         pdf.add_dataframe_table(h_df, "Table 5.1: Queryable Database Audit Trail (prediction_logs Table)")
 
     # CHAPTER 6: TASK 6
@@ -524,14 +524,14 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
     pdf.add_page()
     pdf.chapter_title("Chapter 7 & 8 — Cloud API Deployment & Local Flask Integration (30 Marks)")
 
-    pdf.subtask_heading("Task 7.1: Cloud Model API Deployment & Step-by-Step Instructions")
+    pdf.subtask_heading("Task 7.1: Cloud Model API Deployment on Render & Step-by-Step Instructions")
     pdf.body_paragraph(
-        "Cloud Deployment Pathway & Architecture",
-        f"Following Pathway C (Managed Cloud Container Deployment), the VisionGuard Docker container (23L0713_A2_Ops) is packaged to run as a public HTTPS inference API ({cloud_url}) exposing POST /api/predict and GET /health. Step-by-step deployment workflow:\n"
-        "1. Push repository (Dockerfile, requirements-prod.txt, app/, models/champion_model.keras) to GitHub (https://github.com/AbdullahChouhan/23L0713_A2_Ops).\n"
-        "2. Create a Cloud Docker service (Hugging Face Spaces Docker SDK or Render Web Service) named 23L0713_A2_Ops connected to the repository.\n"
-        "3. Configure environment variables (PROJECT_NAME=23L0713_A2_Ops, MODEL_PATH=models/champion_model.keras, DECISION_THRESHOLD=0.50, PORT=7860/5000, CLOUD_API_KEY).\n"
-        "4. Verify live container readiness via GET /health and test multipart image inference in Postman against POST /api/predict.",
+        "Cloud Deployment Pathway (Pathway C — Render Docker Web Service) & Architecture",
+        f"Following Pathway C, the VisionGuard Docker container (23L0713_A2_Ops) is deployed as a live public HTTPS Web Service on Render ({cloud_url}, Service ID: srv-dbnno81srm7s739v7io0) exposing POST {cloud_url}/api/predict and GET {cloud_url}/health. Step-by-step deployment workflow:\n"
+        "1. Configured Dockerfile with dynamic $PORT binding (gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 1 --threads 2) and TensorFlow CPU arena/thread tuning (OMP_NUM_THREADS=1, MALLOC_ARENA_MAX=2) to fit comfortably inside Render's 512 MB Free Tier RAM envelope.\n"
+        "2. Pushed repository (Dockerfile, render.yaml, requirements-prod.txt, app/, models/champion_model.keras) to GitHub (https://github.com/AbdullahChouhan/23L0713_A2_Ops).\n"
+        "3. Created a Render Docker Web Service named 23L0713_A2_Ops connected to the main branch.\n"
+        f"4. Verified live container readiness at {cloud_url}/health (HTTP 200, model_loaded=true, debug_mode=false) and tested multipart image inference against POST {cloud_url}/api/predict.",
     )
     pdf.add_figure(
         fig_dir / "task7_api_test_evidence.png",

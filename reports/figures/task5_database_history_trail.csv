@@ -1,7 +1,7 @@
 confidence,confidence_pct,created_at,file_size_kb,filename,id,image_dimensions,inference_source,latency_ms,model_version,prob_ai,threshold,verdict
-0.7718,77.18,2026-11-04 22:21:01 UTC,117.98,9780241416907-jacket-large.jpg,6,336x500 (JPEG/RGB),api_endpoint,66.98,VisionGuard-MobileNetV2-v2@champion,0.2282,0.5,Real
-0.9366,93.66,2026-11-04 22:21:01 UTC,103.97,180222162827-the-kiss-story-top-card-image.jpg,5,800x450 (JPEG/RGB),api_endpoint,64.14,VisionGuard-MobileNetV2-v2@champion,0.0634,0.5,Real
-0.8022,80.22,2026-11-04 22:21:01 UTC,76.25,daniel-norton-portrait-photography-CLOSE.jpg,4,1000x667 (JPEG/RGB),api_endpoint,66.6,VisionGuard-MobileNetV2-v2@champion,0.1978,0.5,Real
-0.7502,75.02,2026-11-04 22:21:01 UTC,1438.31,aiart.png,3,2400x1600 (PNG/RGBA),api_endpoint,103.59,VisionGuard-MobileNetV2-v2@champion,0.7502,0.5,AI-Generated
-0.9992,99.92,2026-11-04 22:21:01 UTC,125.51,il_570xN.4707958416_2553.jpg,2,570x570 (JPEG/RGB),api_endpoint,70.28,VisionGuard-MobileNetV2-v2@champion,0.9992,0.5,AI-Generated
-0.7063,70.63,2026-11-04 22:21:01 UTC,407.15,AI_image.png,1,512x512 (PNG/RGB),api_endpoint,71.61,VisionGuard-MobileNetV2-v2@champion,0.7063,0.5,AI-Generated
+0.7718,77.18,2026-11-07 19:37:48 UTC,117.98,9780241416907-jacket-large.jpg,6,336x500 (JPEG/RGB),cloud_api (https://two3l0713-a2-ops.onrender.com),1105.22,VisionGuard-MobileNetV2-v2@champion,0.2282,0.5,Real
+0.9366,93.66,2026-11-07 19:37:46 UTC,103.97,180222162827-the-kiss-story-top-card-image.jpg,5,800x450 (JPEG/RGB),cloud_api (https://two3l0713-a2-ops.onrender.com),989.94,VisionGuard-MobileNetV2-v2@champion,0.0634,0.5,Real
+0.8022,80.22,2026-11-07 19:37:44 UTC,76.25,daniel-norton-portrait-photography-CLOSE.jpg,4,1000x667 (JPEG/RGB),cloud_api (https://two3l0713-a2-ops.onrender.com),999.52,VisionGuard-MobileNetV2-v2@champion,0.1978,0.5,Real
+0.7502,75.02,2026-11-07 19:37:41 UTC,1438.31,aiart.png,3,2400x1600 (PNG/RGBA),cloud_api (https://two3l0713-a2-ops.onrender.com),3467.32,VisionGuard-MobileNetV2-v2@champion,0.7502,0.5,AI-Generated
+0.9992,99.92,2026-11-07 19:37:36 UTC,125.51,il_570xN.4707958416_2553.jpg,2,570x570 (JPEG/RGB),cloud_api (https://two3l0713-a2-ops.onrender.com),1083.57,VisionGuard-MobileNetV2-v2@champion,0.9992,0.5,AI-Generated
+0.7063,70.63,2026-11-07 19:37:33 UTC,407.15,AI_image.png,1,512x512 (PNG/RGB),cloud_api (https://two3l0713-a2-ops.onrender.com),1384.64,VisionGuard-MobileNetV2-v2@champion,0.7063,0.5,AI-Generated
