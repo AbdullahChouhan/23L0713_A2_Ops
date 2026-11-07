@@ -2,6 +2,7 @@
 
 import io
 import json
+import textwrap
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -12,16 +13,51 @@ from app.config import AppConfig
 from app.main import create_app
 
 
+def _wrap_json_block(block_body: str, max_chars: int = 96) -> tuple[str, int]:
+    """Wrap long JSON lines so text never overflows horizontally outside the terminal box."""
+    wrapped_lines: list[str] = []
+    for raw_line in block_body.splitlines():
+        if len(raw_line) <= max_chars:
+            wrapped_lines.append(raw_line)
+        else:
+            leading_spaces = len(raw_line) - len(raw_line.lstrip(" "))
+            indent_str = " " * (leading_spaces + 4)
+            wrapped = textwrap.fill(
+                raw_line,
+                width=max_chars,
+                subsequent_indent=indent_str,
+                break_long_words=True,
+                break_on_hyphens=False,
+            )
+            wrapped_lines.extend(wrapped.splitlines())
+    return "\n".join(wrapped_lines), len(wrapped_lines)
+
+
 def render_terminal_box_figure(title: str, subtitle: str, text_blocks: list[tuple[str, str]], out_path: Path) -> None:
     """Render terminal/HTTP response evidence into a high-DPI captioned figure for the PDF report."""
     n = len(text_blocks)
-    fig, axes = plt.subplots(n, 1, figsize=(13, 3.0 * n))
+    wrapped_blocks: list[tuple[str, str, int]] = []
+    for block_title, block_body in text_blocks:
+        w_text, n_lines = _wrap_json_block(block_body, max_chars=96)
+        wrapped_blocks.append((block_title, w_text, n_lines))
+
+    height_ratios = [max(5, n_lines + 2) for _, _, n_lines in wrapped_blocks]
+    fig_h = sum(height_ratios) * 0.24 + 1.3 + 0.45 * n
+    fig, axes = plt.subplots(
+        n,
+        1,
+        figsize=(13.0, fig_h),
+        gridspec_kw={"height_ratios": height_ratios},
+    )
     if n == 1:
         axes = [axes]
-    fig.suptitle(f"{title}\n{subtitle}", fontsize=12, fontweight="bold", y=0.99)
+    fig.patch.set_facecolor("#ffffff")
+    fig.suptitle(f"{title}\n{subtitle}", fontsize=11.5, fontweight="bold", y=1.0 - (0.18 / fig_h))
 
-    for ax, (block_title, block_body) in zip(axes, text_blocks):
+    for ax, (block_title, w_text, _) in zip(axes, wrapped_blocks):
         ax.set_facecolor("#0f172a")
+        ax.set_xlim(0.0, 1.0)
+        ax.set_ylim(0.0, 1.0)
         ax.set_xticks([])
         ax.set_yticks([])
         for spine in ax.spines.values():
@@ -30,16 +66,19 @@ def render_terminal_box_figure(title: str, subtitle: str, text_blocks: list[tupl
         ax.set_title(block_title, loc="left", fontsize=10.5, fontweight="bold", color="#1e293b", pad=6)
         ax.text(
             0.02,
-            0.92,
-            block_body,
+            0.94,
+            w_text,
             transform=ax.transAxes,
-            fontsize=8.6,
+            fontsize=8.8,
             fontfamily="monospace",
             color="#e2e8f0",
             verticalalignment="top",
+            clip_on=True,
         )
 
-    plt.tight_layout(rect=[0, 0, 1, 0.94])
+    top_margin = max(0.75, 1.0 - (0.85 / fig_h))
+    bottom_margin = min(0.10, 0.25 / fig_h)
+    fig.subplots_adjust(left=0.03, right=0.97, top=top_margin, bottom=bottom_margin, hspace=0.26)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(out_path, dpi=200)
     plt.close(fig)
@@ -164,25 +203,32 @@ def main() -> None:
 
     import requests as ext_requests
 
+    saved_resp_path = out_dir / "task7_api_postman_responses.json"
+    cached_responses = json.loads(saved_resp_path.read_text(encoding="utf-8")) if saved_resp_path.exists() else None
+
     for idx, (_, row) in enumerate(sample_rows.iterrows()):
         img_path = Path(row["file_path"])
         raw_bytes = img_path.read_bytes()
 
-        # Task 7: Direct call to live Render Cloud API endpoint
-        live_r = ext_requests.post(
-            f"{cloud_url}/api/predict",
-            files={"file": (img_path.name, raw_bytes, "application/octet-stream")},
-            timeout=45,
-        )
-        payload = live_r.json()
+        if cached_responses and idx < len(cached_responses):
+            payload = cached_responses[idx]
+        else:
+            # Task 7: Direct call to live Render Cloud API endpoint
+            live_r = ext_requests.post(
+                f"{cloud_url}/api/predict",
+                files={"file": (img_path.name, raw_bytes, "application/octet-stream")},
+                timeout=90,
+            )
+            payload = live_r.json()
         api_responses.append(payload)
 
-        # Task 8: Also call local Flask /predict view (which forwards to cloud_url and logs to local DB)
-        _ = client_full.post(
-            "/predict",
-            data={"file": (io.BytesIO(raw_bytes), img_path.name), "inference_mode": "cloud"},
-            content_type="multipart/form-data",
-        )
+        if not cached_responses:
+            # Task 8: Also call local Flask /predict view (which forwards to cloud_url and logs to local DB)
+            _ = client_full.post(
+                "/predict",
+                data={"file": (io.BytesIO(raw_bytes), img_path.name), "inference_mode": "cloud"},
+                content_type="multipart/form-data",
+            )
 
         ax = axes.flat[idx]
         with Image.open(img_path) as img:
@@ -221,9 +267,12 @@ def main() -> None:
     )
 
     # Save History Trail Table for Task 5 & Task 8
-    hist_resp = client_full.get("/history?format=json").get_json()
-    hist_df = pd.DataFrame(hist_resp["history"])
-    hist_df.to_csv(out_dir / "task5_database_history_trail.csv", index=False)
+    if not cached_responses:
+        hist_resp = client_full.get("/history?format=json").get_json()
+        hist_df = pd.DataFrame(hist_resp["history"])
+        hist_df.to_csv(out_dir / "task5_database_history_trail.csv", index=False)
+    else:
+        hist_df = pd.read_csv(out_dir / "task5_database_history_trail.csv")
     print("[INFO] Captured Flask validation, API responses, and database history trail:")
     print(hist_df[["id", "created_at", "filename", "verdict", "confidence_pct", "prob_ai", "model_version", "latency_ms"]].to_string(index=False))
 
