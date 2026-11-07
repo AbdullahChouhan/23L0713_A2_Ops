@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: 23L0713_A2_Ops
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PROJECT_NAME
+        value: 23L0713_A2_Ops
+      - key: MODEL_PATH
+        value: models/champion_model.keras
+      - key: MODEL_VERSION
+        value: VisionGuard-MobileNetV2-v2@champion
+      - key: DECISION_THRESHOLD
+        value: "0.50"
+      - key: MAX_CONTENT_LENGTH_MB
+        value: "10"
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: DATABASE_URL
+        value: sqlite:////tmp/visionguard_cloud.db
+      - key: CLOUD_API_KEY
+        value: vg_api_secret_23L0713
