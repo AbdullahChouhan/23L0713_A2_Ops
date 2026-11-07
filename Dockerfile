@@ -16,9 +16,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Create a non-root user and group before copying application files
+# Create a non-root user and group before copying application files, and grant /app ownership
 RUN groupadd --system appgroup && \
-    useradd --system --gid appgroup --create-home --home-dir /home/appuser appuser
+    useradd --system --gid appgroup --create-home --home-dir /home/appuser appuser && \
+    chown -R appuser:appgroup /app
 
 # Install dependencies BEFORE copying source code to maximize Docker layer caching
 COPY requirements-prod.txt ./
