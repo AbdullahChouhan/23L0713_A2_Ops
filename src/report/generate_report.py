@@ -173,6 +173,7 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
             {"Field": "Roll Number", "Value": "23L0713"},
             {"Field": "Project Name (Everywhere)", "Value": "23L0713_A2_Ops"},
             {"Field": "GitHub Repository", "Value": "https://github.com/AbdullahChouhan/23L0713_A2_Ops"},
+            {"Field": "Toy CI Repository (Task 6.6)", "Value": "https://github.com/AbdullahChouhan/23L0713_A2_ToyCI"},
             {"Field": "DagsHub Repository", "Value": "https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops"},
             {"Field": "MLflow Tracking URI", "Value": "https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops.mlflow"},
             {"Field": "Live Cloud API URL", "Value": cloud_url},
@@ -523,9 +524,19 @@ def build_pdf_report(output_pdf: Path = Path("23L0713_VisionGuard.pdf")) -> None
 
     pdf.subtask_heading("Task 6.6: GitHub Actions Continuous Integration (CI)")
     pdf.body_paragraph(
-        "Workflow Design & Secret Management",
-        "We created .github/workflows/ci.yml which triggers on every push/PR to main, installs dependencies, runs ruff check linting, executes all 5 automated validation/database tests in tests/test_app.py via pytest, and builds the production Docker image. Workflow secrets (such as DAGSHUB_TOKEN or cloud deployment keys) are stored in GitHub Repository Settings -> Secrets and variables -> Actions and injected via ${{ secrets.NAME }} at runtime because committing secrets in YAML exposes them permanently in public Git history.",
+        "Throwaway Toy CI Repository (Red Run -> Green Run) & Main Project CI Workflow",
+        "First, in our throwaway toy repository (https://github.com/AbdullahChouhan/23L0713_A2_ToyCI), we created a matrix GitHub Actions workflow (.github/workflows/toy_ci.yml across Python 3.10 and 3.11) and pushed Commit 1 (294dcd9) with an intentionally failing assertion in test_toy.py, triggering a Red (failed) workflow run. We then fixed the assertion and pushed Commit 2 (83e2709), triggering a Green (passed) workflow run. Second, in the main repository (https://github.com/AbdullahChouhan/23L0713_A2_Ops), .github/workflows/ci.yml triggers on every push/PR to main, runs ruff check linting, executes all 5 automated validation/database tests in tests/test_app.py via pytest, and builds the production Docker image. Workflow secrets (such as DAGSHUB_TOKEN or cloud deployment keys) are stored in GitHub Repository Settings -> Secrets and variables -> Actions and injected via ${{ secrets.NAME }} at runtime because committing secrets in YAML exposes them permanently in public Git history.",
     )
+    toy_ci_txt = fig_dir / "task6_6_toy_ci_log.txt"
+    if toy_ci_txt.exists():
+        pdf.code_block("Terminal Evidence (Task 6.6): Toy CI Repo (23L0713_A2_ToyCI) Red -> Green Commits", toy_ci_txt.read_text(encoding="utf-8"), max_lines=45)
+    toy_ci_img = fig_dir / "user_toy_ci_actions.png"
+    if toy_ci_img.exists():
+        pdf.add_figure(
+            toy_ci_img,
+            "Figure 6.6: GitHub Actions UI showing both the Red (failed) and Green (passed) CI runs.",
+            width=175.0,
+        )
 
     # CHAPTER 7 & 8: TASK 7 & TASK 8
     pdf.add_page()

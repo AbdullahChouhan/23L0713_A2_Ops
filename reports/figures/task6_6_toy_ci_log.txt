@@ -1,0 +1,50 @@
+==============================================================================
+
+Task 6.6 — GitHub Actions Toy CI Repository Execution Log (23L0713_A2_ToyCI)
+
+Remote Repository: https://github.com/AbdullahChouhan/23L0713_A2_ToyCI.git
+
+==============================================================================
+
+$ git init -b main
+Initialized empty Git repository in D:/Projects/FAST/MLOPs/A2/toy_labs/toy_ci_repo_work/.git/
+
+$ git config user.name Abdullah Chouhan
+(exit 0)
+
+$ git config user.email l230713@lhr.nu.edu.pk
+(exit 0)
+
+$ git remote add origin https://github.com/AbdullahChouhan/23L0713_A2_ToyCI.git
+(exit 0)
+
+$ git add .
+(exit 0)
+
+$ git commit -m Commit 1 (Red Run): Add matrix CI workflow and intentionally failing test
+[main (root-commit) 294dcd9] Commit 1 (Red Run): Add matrix CI workflow and intentionally failing test
+ 3 files changed, 42 insertions(+)
+ create mode 100644 .github/workflows/toy_ci.yml
+ create mode 100644 README.md
+ create mode 100644 test_toy.py
+
+$ git push -u -f origin main
+branch 'main' set up to track 'origin/main'.
+
+To https://github.com/AbdullahChouhan/23L0713_A2_ToyCI.git
+ * [new branch]      main -> main
+
+$ git add test_toy.py
+(exit 0)
+
+$ git commit -m Commit 2 (Green Run): Fix confidence assertion in test_toy.py
+[main 83e2709] Commit 2 (Green Run): Fix confidence assertion in test_toy.py
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+$ git push origin main
+To https://github.com/AbdullahChouhan/23L0713_A2_ToyCI.git
+   294dcd9..83e2709  main -> main
+
+$ git log --oneline
+83e2709 Commit 2 (Green Run): Fix confidence assertion in test_toy.py
+294dcd9 Commit 1 (Red Run): Add matrix CI workflow and intentionally failing test

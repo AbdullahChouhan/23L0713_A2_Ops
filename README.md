@@ -9,6 +9,7 @@
 **Roll Number**: `23L0713`  
 **Project Name**: `23L0713_A2_Ops`  
 **GitHub Repository**: [https://github.com/AbdullahChouhan/23L0713_A2_Ops](https://github.com/AbdullahChouhan/23L0713_A2_Ops)  
+**Toy CI Repository (Task 6.6)**: [https://github.com/AbdullahChouhan/23L0713_A2_ToyCI](https://github.com/AbdullahChouhan/23L0713_A2_ToyCI)  
 **DagsHub Repository**: [https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops](https://dagshub.com/AbdullahChouhan/23L0713_A2_Ops)  
 **Live Cloud API & Web Service (Render)**: [https://two3l0713-a2-ops.onrender.com](https://two3l0713-a2-ops.onrender.com)  
 **Live Health Endpoint**: [https://two3l0713-a2-ops.onrender.com/health](https://two3l0713-a2-ops.onrender.com/health)
